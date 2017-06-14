@@ -36,6 +36,11 @@ class EDTestCase(unittest.TestCase):
     def appInformation(self):
         print (self.driver.contexts[-1])
 
+    def assertEqualMethodCheck(self, element, msg):
+        negative_msg = '{} not found'.format(msg)
+        positive_msg = '{} found'.format(msg)
+        return self.log.info(negative_msg) if self.assertIsNotNone(element) else self.log.info(positive_msg)
+
     @unittest.skip("network-connection")
     def test_000_network_connection(self):
         self.appInformation()   # print app info
@@ -56,22 +61,19 @@ class EDTestCase(unittest.TestCase):
         self.appInformation()   # print app info
         sleep(LET_ME_SLEEP_SHORT)
         play_button = self.driver.find_element_by_css_selector('.bubbly-btn.play-button')
-        self.assertIsNotNone(play_button)
-        self.log.info('play_button found')
+        self.assertEqualMethodCheck(play_button, 'play button')
 
-        settings_button = self.driver.find_elements_by_xpath("//*[contains(text(), 'Settings')]")
-        self.assertIsNotNone(settings_button)
-        self.log.info('settings_button found')
+        settings_button = self.driver.find_element_by_xpath("//*[contains(text(), 'Settings')]")
+        self.assertEqualMethodCheck(settings_button, 'settings button')
 
-        profile_button = self.driver.find_elements_by_xpath("//*[contains(text(),'Profile')]")
-        self.assertIsNotNone(profile_button)
-        self.log.info('profile_button found')
+        profile_button = self.driver.find_element_by_xpath("//*[contains(text(),'Profile')]")
+        self.assertEqualMethodCheck(profile_button, 'profile button')
 
-        recommendation_button = self.driver.find_elements_by_xpath("//*[contains(text(), 'Recommendation')]")
-        self.assertIsNotNone(recommendation_button)
-        self.log.info('recommendation_button found')
+        recommendation_button = self.driver.find_element_by_xpath("//*[contains(text(), 'Recommendation')]")
+        recommendation_button.click()
+        self.assertEqualMethodCheck(recommendation_button, 'recommendation button')
 
-    @unittest.skip("profilepage")
+    @unittest.skip("profilepage play button click")
     def test_02_play_button_click(self):
         self.appInformation()   # print app info
         sleep(LET_ME_SLEEP_SHORT)
@@ -80,7 +82,7 @@ class EDTestCase(unittest.TestCase):
         sleep(LET_ME_SLEEP_NAP)
         self.tearDown()
 
-    @unittest.skip("profilepage")
+    @unittest.skip("grade content test")
     def test_03_grade_content_test(self):
         self.appInformation()   # print app info
         sleep(LET_ME_SLEEP_SHORT)
