@@ -3,8 +3,9 @@ from appium import webdriver
 from time import sleep
 import logging
 import desired_capabilities
-from appium.webdriver.common.touch_action import TouchAction
-from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
 logging.basicConfig(level=logging.INFO)
 context_name = "WEBVIEW"
@@ -58,7 +59,6 @@ class EDTestCase(unittest.TestCase):
         self.assertIsInstance(nc, int)
         self.assertEqual(nc, ConnectionType.DATA_ONLY)
 
-
     @unittest.skip("profilepage")
     def test_00_profilepage(self):
         self.appInformation()   # print app info
@@ -96,58 +96,64 @@ class EDTestCase(unittest.TestCase):
         self.tearDown()
 
     # @unittest.skip("grade content test")
-    def test_03_grade_content_test(self):
-        sleep(LET_ME_SLEEP_NAP)
+    def test_03_grade_content_quiz_test(self):
+        sleep(LET_ME_SLEEP_SHORT)
 
         # playbutton click
         self.driver.find_element_by_css_selector('.bubbly-btn.play-button').click()
         sleep(LET_ME_SLEEP_QUICK)
+        self.log.info("play button clicked")
 
         # skill tag click
         self.driver.find_element_by_xpath("/html/body/ion-nav-view/ion-nav-view/div/ion-content/div/div/div[1]/div[1]/a").click()
         sleep(LET_ME_SLEEP_QUICK)
+        self.log.info("skill tag clicked")
 
         # lesson item click
         self.driver.find_element_by_xpath('//*[@id="content-list-view"]/ion-content/div/div[1]/a').click()
+        self.log.info("lesson item clicked")
         sleep(LET_ME_SLEEP_QUICK)
 
         #quiz button
+        # quiz_button = self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-content/div/div/div[1]')
+        # vocab_button = self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-content/div/div/div[2]')
         quiz_button = self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/div/div[1]/button')
-        vocab_button = self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/div/div[2]/button')
-        videos_button = self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/div/div[3]/button')
 
         # testing quiz
         quiz_button.click()
+        self.log.info("quiz item clicked")
+        sleep(LET_ME_SLEEP_SHORT)
 
-        # question slides :  slider-slides
-        # quesiton options :      //*[@id="step2"]/div/div
-        # each question option :  //*[@id="step2"]/div/div/div[4]
-        # each question card options : lcard center bg-white card-radius disable-user-behavior card-list
-        # submit button : //*[@id="step3"]/center/button[1]
+        # question lists
+        # import ipdb; ipdb.set_trace()
+        self.log.info("waiting for question lists")
+        # questions = WebDriverWait(self.driver, LET_ME_SLEEP_LONG).until(
+        #     EC.presence_of_element_located((By.CSS_SELECTOR, "slider-slides"))
+        # )
 
-        # question_slides = –
+        # //*[@id="tour-container"]/div[2]/div[1]
+        import ipdb; ipdb.set_trace()
+        questions = self.driver.find_elements_by_xpath('//*[@id="tour-container"]/div[2]/div[1]')
+        self.log.info("question list available")
+        for question in questions:
+            print (question)
+        #
+        # counter = 0
+        # for question in questions:
+        #     counter = counter + 1
+        #     self.log.info("selecting option for question #"+str(key))
+        #     sleep(LET_ME_SLEEP_QUICK)
+        #     question.find_element_by_id('question-{}-option-{}'.format(counter, 1)).click()
+        #
+        #     # submit question
+        #     self.driver.find_element_by_id('quiz-submit').click()
+        #     self.log.info("submitting answer for question #"+str(counter))
 
-        for questio-idx, question in question-slides:
-            for option-idx, option in question-options:
-                print ("--")
-
-
-        # for question in slider-slides:
-        #     counter = 1
-        #     for option in quesiton options:
-        #         counter = counter + 1
-        #         if counter == 3
-        #             //*[@id="step2"]/div/div/div[counter].click()
-        #         submit button.click()
-        #         continue
-
-        self.driver.find_elements_by_id('slider-slides')
+        sleep(LET_ME_SLEEP_NAP)
+        # submit report
+        #self.driver.find_element_by_css_selector('.sbtn.sbtn-next-yellow').click()
 
         sleep(LET_ME_SLEEP_LONG)
-
-        import ipdb;ipdb.set_trace()
-
-        questions = self.driver.find_elements_by_xpath('//*[@id="step2"]/div/div')
 
         self.closeApp()
 
@@ -181,7 +187,6 @@ class EDTestCase(unittest.TestCase):
         sleep(LET_ME_SLEEP_SHORT)
 
         self.closeApp()
-
 
     @unittest.skip("profile registration")
     def test_04_profile_registration(self):
