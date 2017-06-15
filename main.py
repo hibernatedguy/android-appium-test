@@ -18,7 +18,7 @@ LET_ME_SLEEP_QUICK = 2
 
 class EDTestCase(unittest.TestCase):
     def setUp(self):
-        desired_caps = desired_capabilities.get_desired_capabilities('zaya-mobile-pipeline-combined3.apk')
+        desired_caps = desired_capabilities.get_desired_capabilities('zaya-mobile-pipeline-combined_4.apk')
 
         # web driver remote access
         self.driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', desired_caps)
@@ -115,9 +115,9 @@ class EDTestCase(unittest.TestCase):
         sleep(LET_ME_SLEEP_QUICK)
 
         #quiz button
-        # quiz_button = self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-content/div/div/div[1]')
+        quiz_button = self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-content/div/div/div[1]')
         # vocab_button = self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-content/div/div/div[2]')
-        quiz_button = self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/div/div[1]/button')
+        # quiz_button = self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/div/div[1]/button')
 
         # testing quiz
         quiz_button.click()
@@ -125,33 +125,25 @@ class EDTestCase(unittest.TestCase):
         sleep(LET_ME_SLEEP_SHORT)
 
         # question lists
-        # import ipdb; ipdb.set_trace()
         self.log.info("waiting for question lists")
-        # questions = WebDriverWait(self.driver, LET_ME_SLEEP_LONG).until(
-        #     EC.presence_of_element_located((By.CSS_SELECTOR, "slider-slides"))
-        # )
 
         # //*[@id="tour-container"]/div[2]/div[1]
-        import ipdb; ipdb.set_trace()
-        questions = self.driver.find_elements_by_xpath('//*[@id="tour-container"]/div[2]/div[1]')
+        questions = self.driver.find_elements_by_css_selector('.slider-slide')
         self.log.info("question list available")
-        for question in questions:
-            print (question)
-        #
-        # counter = 0
-        # for question in questions:
-        #     counter = counter + 1
-        #     self.log.info("selecting option for question #"+str(key))
-        #     sleep(LET_ME_SLEEP_QUICK)
-        #     question.find_element_by_id('question-{}-option-{}'.format(counter, 1)).click()
-        #
-        #     # submit question
-        #     self.driver.find_element_by_id('quiz-submit').click()
-        #     self.log.info("submitting answer for question #"+str(counter))
+
+        for key, question in enumerate(questions):
+            self.log.info("selecting option for question #"+str(key))
+            sleep(LET_ME_SLEEP_QUICK)
+            question.find_element_by_id('question-{}-option-{}'.format(key, 1)).click()
+
+            # submit question
+            self.driver.find_element_by_id('quiz-submit').click()
+            self.log.info("submitting answer for question #"+str(key))
+            sleep(LET_ME_SLEEP_QUICK)
 
         sleep(LET_ME_SLEEP_NAP)
         # submit report
-        #self.driver.find_element_by_css_selector('.sbtn.sbtn-next-yellow').click()
+        self.driver.find_element_by_css_selector('.sbtn.sbtn-next-yellow').click()
 
         sleep(LET_ME_SLEEP_LONG)
 
