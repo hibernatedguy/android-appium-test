@@ -1,17 +1,16 @@
 import os
 
-# Returns abs path relative to this file and not cwd
-PATH = lambda p: os.path.abspath(
-    os.path.join(os.path.dirname(__file__), p)
-)
 
 def get_desired_capabilities(app):
     desired_caps = {
         'platformName': 'Android',
-        'platformVersion': '5.0',
-        'deviceName': 'Android Emulator',
-        'app': PATH('../../apps/' + app),
-        'newCommandTimeout': 240
+        'platformVersion': '6.0.1',
+        'deviceName': 'DeadByCode',
+        'browserName': '',
+        'autoWebview': True,
+        'newCommandTimeout': 240,
+        'noReset': True,
+        'app': os.path.abspath('/Users/Ashish/Documents/workspace/zaya/projects/apks/'+app),
     }
 
     return desired_caps

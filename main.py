@@ -1,28 +1,25 @@
 import unittest
-import os
 from appium import webdriver
 from time import sleep
 import logging
-logging.basicConfig(level=logging.INFO)
+import desired_capabilities
+from appium.webdriver.common.touch_action import TouchAction
+from selenium.webdriver.common.action_chains import ActionChains
 
-PATH = os.path.abspath('/Users/Ashish/Documents/workspace/zaya/projects/apks/zaya-mobile-pipeline-combined2.apk')
+logging.basicConfig(level=logging.INFO)
 context_name = "WEBVIEW"
+
 LET_ME_SLEEP_LONG = 20
 LET_ME_SLEEP_SHORT = 10
 LET_ME_SLEEP_NAP = 5
+LET_ME_SLEEP_QUICK = 2
 
 
 class EDTestCase(unittest.TestCase):
     def setUp(self):
-        desired_caps = {}
-        desired_caps['platformName'] = 'Android'
-        desired_caps['platformVersion'] = '6.0.1'
-        desired_caps['deviceName'] = 'DeadByCode'
-        desired_caps['browserName'] = ''
-        desired_caps['autoWebview'] = True
-        desired_caps['noReset'] = True
-        desired_caps['app'] = PATH
+        desired_caps = desired_capabilities.get_desired_capabilities('zaya-mobile-pipeline-combined3.apk')
 
+        # web driver remote access
         self.driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', desired_caps)
         self.driver.switch_to.context(self.driver.contexts[-1])
         self.log = logging.getLogger('appium-ed-logger # ')
@@ -33,6 +30,9 @@ class EDTestCase(unittest.TestCase):
     def resetApp(self):
         self.driver.resetApp()
 
+    def goBack(self):
+        self.driver.back()
+
     def appInformation(self):
         print (self.driver.contexts[-1])
 
@@ -41,11 +41,23 @@ class EDTestCase(unittest.TestCase):
         positive_msg = '{} found'.format(msg)
         return self.log.info(negative_msg) if self.assertIsNotNone(element) else self.log.info(positive_msg)
 
-    @unittest.skip("network-connection")
-    def test_000_network_connection(self):
+    @unittest.skip("check network-connection")
+    def test_000_get_network_connection(self):
         self.appInformation()   # print app info
         nc = self.driver.network_connection
         self.assertIsInstance(nc, int)
+
+    @unittest.skip("set network connection")
+    def test_000_set_network_connection(self):
+        nc = self.driver.network_connection
+        self.assertIsInstance(nc, int)
+
+    @unittest.skip("profilepage")
+    def test_001_network_connection(self):
+        nc = self.driver.set_network_connection(ConnectionType.DATA_ONLY)
+        self.assertIsInstance(nc, int)
+        self.assertEqual(nc, ConnectionType.DATA_ONLY)
+
 
     @unittest.skip("profilepage")
     def test_00_profilepage(self):
@@ -57,6 +69,7 @@ class EDTestCase(unittest.TestCase):
         self.assertIsNotNone(profile_element)
         sleep(LET_ME_SLEEP_LONG)
 
+    @unittest.skip("profilepage button visibility")
     def test_01_after_profile_button_visibility(self):
         self.appInformation()   # print app info
         sleep(LET_ME_SLEEP_SHORT)
@@ -82,20 +95,141 @@ class EDTestCase(unittest.TestCase):
         sleep(LET_ME_SLEEP_NAP)
         self.tearDown()
 
-    @unittest.skip("grade content test")
+    # @unittest.skip("grade content test")
     def test_03_grade_content_test(self):
-        self.appInformation()   # print app info
-        sleep(LET_ME_SLEEP_SHORT)
+        sleep(LET_ME_SLEEP_NAP)
+
+        # playbutton click
+        self.driver.find_element_by_css_selector('.bubbly-btn.play-button').click()
+        sleep(LET_ME_SLEEP_QUICK)
+
+        # skill tag click
+        self.driver.find_element_by_xpath("/html/body/ion-nav-view/ion-nav-view/div/ion-content/div/div/div[1]/div[1]/a").click()
+        sleep(LET_ME_SLEEP_QUICK)
+
+        # lesson item click
+        self.driver.find_element_by_xpath('//*[@id="content-list-view"]/ion-content/div/div[1]/a').click()
+        sleep(LET_ME_SLEEP_QUICK)
+
+        #quiz button
+        quiz_button = self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/div/div[1]/button')
+        vocab_button = self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/div/div[2]/button')
+        videos_button = self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/div/div[3]/button')
+
+        # testing quiz
+        quiz_button.click()
+
+        # question slides :  slider-slides
+        # quesiton options :      //*[@id="step2"]/div/div
+        # each question option :  //*[@id="step2"]/div/div/div[4]
+        # each question card options : lcard center bg-white card-radius disable-user-behavior card-list
+        # submit button : //*[@id="step3"]/center/button[1]
+
+        # question_slides = –
+
+        for questio-idx, question in question-slides:
+            for option-idx, option in question-options:
+                print ("--")
+
+
+        # for question in slider-slides:
+        #     counter = 1
+        #     for option in quesiton options:
+        #         counter = counter + 1
+        #         if counter == 3
+        #             //*[@id="step2"]/div/div/div[counter].click()
+        #         submit button.click()
+        #         continue
+
+        self.driver.find_elements_by_id('slider-slides')
+
+        sleep(LET_ME_SLEEP_LONG)
+
+        import ipdb;ipdb.set_trace()
+
+        questions = self.driver.find_elements_by_xpath('//*[@id="step2"]/div/div')
+
+        self.closeApp()
+
+    @unittest.skip("grade content list search")
+    def test_04_grade_content_list_search(self):
+        sleep(LET_ME_SLEEP_NAP)
+
+        # playbutton click
         play_button = self.driver.find_element_by_css_selector('.bubbly-btn.play-button')
         play_button.click()
+
+        # skill tag click
+        self.driver.find_element_by_xpath("/html/body/ion-nav-view/ion-nav-view/div/ion-content/div/div/div[1]/div[1]/a").click()
+        sleep(LET_ME_SLEEP_QUICK)
+
+        search_bar = self.driver.find_element_by_xpath('//*[@id="content-list-view"]/div/label/input')
+        search_bar.click()
+        search_bar.send_keys("colours")
+
+        sleep(LET_ME_SLEEP_QUICK)
+
+        lesson_list_item = self.driver.find_element_by_xpath('//*[@id="content-list-view"]/ion-content/div/div[1]/a')
+        lesson_list_item.click()
+
         sleep(LET_ME_SLEEP_SHORT)
 
-        # click on vocabulary
-        check_current_active_tab = self.driver.find_element_by_css_selector('.tab-item.ng-binding.active')
-        self.assertIsNotNone(check_current_active_tab)
+        self.goBack()
+        self.goBack()
+        self.goBack()
+
+        sleep(LET_ME_SLEEP_SHORT)
+
+        self.closeApp()
 
 
-        self.tearDown()
+    @unittest.skip("profile registration")
+    def test_04_profile_registration(self):
+        self.appInformation()
+        sleep(LET_ME_SLEEP_NAP)
+
+        key_f = self.driver.find_element_by_id('key-F').click()
+        key_u = self.driver.find_element_by_id('key-u').click()
+        key_k = self.driver.find_element_by_id('key-K').click()
+        key_r = self.driver.find_element_by_id('key-R').click()
+        key_e = self.driver.find_element_by_id('key-E').click()
+
+        sleep(LET_ME_SLEEP_NAP)
+        registration_submit_button_click = self.driver.find_element_by_id('register-submit-name').click()
+
+        sleep(LET_ME_SLEEP_NAP)
+        gender_selection_boy = self.driver.find_element_by_xpath('//*[@id="radio-gender-male"]').click()
+
+        sleep(LET_ME_SLEEP_NAP)
+        submit_gender_form = self.driver.find_element_by_id('register-submit-gender').click()
+
+        grade_selection = self.driver.find_element_by_id('radio-grade-3').click()
+
+        sleep(LET_ME_SLEEP_NAP)
+        submit_grade_form = self.driver.find_element_by_id('register-submit-grade').click()
+
+        sleep(LET_ME_SLEEP_LONG)
+
+    @unittest.skip("phone number registration")
+    def test_05_profile_phone_registration(self):
+        self.appInformation()
+
+        sleep(LET_ME_SLEEP_NAP)
+
+        self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-view/ion-content/div/div/div[5]/virtual-numpad/div[3]/a[3]').click()
+        self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-view/ion-content/div/div/div[5]/virtual-numpad/div[1]/a[1]').click()
+        self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-view/ion-content/div/div/div[5]/virtual-numpad/div[1]/a[2]').click()
+        self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-view/ion-content/div/div/div[5]/virtual-numpad/div[1]/a[3]').click()
+        self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-view/ion-content/div/div/div[5]/virtual-numpad/div[2]/a[1]').click()
+        self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-view/ion-content/div/div/div[5]/virtual-numpad/div[2]/a[2]').click()
+        self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-view/ion-content/div/div/div[5]/virtual-numpad/div[2]/a[3]').click()
+        self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-view/ion-content/div/div/div[5]/virtual-numpad/div[3]/a[1]').click()
+        self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-view/ion-content/div/div/div[5]/virtual-numpad/div[3]/a[2]').click()
+        self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-view/ion-content/div/div/div[5]/virtual-numpad/div[3]/a[3]').click()
+
+        self.driver.find_element_by_css_selector('.sbtn.sbtn-next.sbtn-next-blue').click()
+
+        sleep(LET_ME_SLEEP_LONG)
 
 
 if __name__ == '__main__':

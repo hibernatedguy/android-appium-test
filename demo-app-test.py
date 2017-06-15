@@ -219,7 +219,13 @@ class TouchActionTests(unittest.TestCase):
     def test_driver_swipe(self):
         self.assertRaises(NoSuchElementException, self.driver.find_element_by_name, 'Views')
 
-        self.driver.swipe(100, 500, 100, 100, 800)
+        action = TouchAction(self.driver)
+        action.tap(el).perform()
+
+        el = self.driver.find_element_by_name('Expandable Lists')
+        # simulate a swipe/scroll
+        action.press(el).move_to(x=100, y=-1000).release().perform()
+
         el = self.driver.find_element_by_name('Views')
         self.assertIsNotNone(el)
 
