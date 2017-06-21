@@ -5,6 +5,7 @@ import logging
 import desired_capabilities
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 
 logging.basicConfig(level=logging.INFO)
@@ -95,32 +96,8 @@ class EDTestCase(unittest.TestCase):
         sleep(LET_ME_SLEEP_NAP)
         self.tearDown()
 
-    # @unittest.skip("grade content test")
-    def test_03_grade_content_quiz_test(self):
-        sleep(LET_ME_SLEEP_SHORT)
+    def quiz_question_test(self):
 
-        # playbutton click
-        self.driver.find_element_by_css_selector('.bubbly-btn.play-button').click()
-        sleep(LET_ME_SLEEP_QUICK)
-        self.log.info("play button clicked")
-
-        # skill tag click
-        self.driver.find_element_by_xpath("/html/body/ion-nav-view/ion-nav-view/div/ion-content/div/div/div[1]/div[1]/a").click()
-        sleep(LET_ME_SLEEP_QUICK)
-        self.log.info("skill tag clicked")
-
-        # lesson item click
-        self.driver.find_element_by_xpath('//*[@id="content-list-view"]/ion-content/div/div[1]/a').click()
-        self.log.info("lesson item clicked")
-        sleep(LET_ME_SLEEP_QUICK)
-
-        #quiz button
-        quiz_button = self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-content/div/div/div[1]')
-        # vocab_button = self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-content/div/div/div[2]')
-        # quiz_button = self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/div/div[1]/button')
-
-        # testing quiz
-        quiz_button.click()
         self.log.info("quiz item clicked")
         sleep(LET_ME_SLEEP_SHORT)
 
@@ -145,8 +122,70 @@ class EDTestCase(unittest.TestCase):
         # submit report
         self.driver.find_element_by_css_selector('.sbtn.sbtn-next-yellow').click()
 
-        sleep(LET_ME_SLEEP_LONG)
+    def vocab_ui_test(self):
+        self.log.info('VocabUI clicked ')
+        sleep(LET_ME_SLEEP_NAP)
+        try:
+            next_button = WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, ".sbtn.sbtn-arrow-forward")))
+            self.log.info("next button is visible")
+            vocab_cards = self.driver.find_elements_by_css_selector(".flash-card.align-middle")
+            self.log.info("all vocab cards are available")
 
+            for key, vocab_card in enumerate(vocab_cards):
+                next_button_active = WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.CSS_SELECTOR, ".sbtn.sbtn-arrow-forward")))
+                next_button_active.click()
+                self.log.info("VocabCard #"+str(key))
+                sleep(LET_ME_SLEEP_QUICK)
+
+                submit_button_inactive = self.driver.find_elements_by_css_selector(".sbtn.sbtn-arrow-finish.ng-hide")
+                if not submit_button_inactive:
+                    self.log.info('submit button visible')
+                    submit_button_active = self.driver.find_element_by_css_selector(".sbtn.sbtn-arrow-finish")
+                    submit_button_active.click()
+                    self.log.info('submit button clicked')
+
+            sleep(LET_ME_SLEEP_QUICK)
+            submit_button = self.driver.find_element_by_id("result-next")
+            submit_button.click()
+            self.log.info("Report Page clicked")
+
+        except Exception as e:
+            pass
+
+
+    # @unittest.skip("grade content test")
+    def test_03_grade_content_quiz_test(self):
+        sleep(LET_ME_SLEEP_SHORT)
+
+        # playbutton click
+        self.driver.find_element_by_css_selector('.bubbly-btn.play-button').click()
+        sleep(LET_ME_SLEEP_QUICK)
+        self.log.info("play button clicked")
+
+        # skill tag click
+        self.driver.find_element_by_xpath("/html/body/ion-nav-view/ion-nav-view/div/ion-content/div/div/div[1]/div[1]/a").click()
+        sleep(LET_ME_SLEEP_QUICK)
+        self.log.info("skill tag clicked")
+
+        # lesson item click
+        self.driver.find_element_by_xpath('//*[@id="content-list-view"]/ion-content/div/div[1]/a').click()
+        self.log.info("lesson item clicked")
+        sleep(LET_ME_SLEEP_QUICK)
+
+        #quiz button
+        quiz_button = self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-content/div/div/div[1]')
+        vocab_button = self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-content/div/div/div[2]')
+        # quiz_button = self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/div/div[1]/button')
+
+        # TESTING QUIZ QUESTIONS
+        quiz_button.click()
+        self.quiz_question_test()   # test quiz
+
+        # TESTING VOCABULARY QUESTIONS
+        vocab_button.click()
+        self.vocab_ui_test()
+
+        sleep(LET_ME_SLEEP_LONG)
         self.closeApp()
 
     @unittest.skip("grade content list search")
@@ -192,18 +231,18 @@ class EDTestCase(unittest.TestCase):
         key_e = self.driver.find_element_by_id('key-E').click()
 
         sleep(LET_ME_SLEEP_NAP)
-        registration_submit_button_click = self.driver.find_element_by_id('register-submit-name').click()
+        self.driver.find_element_by_id('register-submit-name').click()
 
         sleep(LET_ME_SLEEP_NAP)
-        gender_selection_boy = self.driver.find_element_by_xpath('//*[@id="radio-gender-male"]').click()
+        self.driver.find_element_by_xpath('//*[@id="radio-gender-male"]').click()
 
         sleep(LET_ME_SLEEP_NAP)
-        submit_gender_form = self.driver.find_element_by_id('register-submit-gender').click()
+        self.driver.find_element_by_id('register-submit-gender').click()
 
-        grade_selection = self.driver.find_element_by_id('radio-grade-3').click()
+        self.driver.find_element_by_id('radio-grade-3').click()
 
         sleep(LET_ME_SLEEP_NAP)
-        submit_grade_form = self.driver.find_element_by_id('register-submit-grade').click()
+        self.driver.find_element_by_id('register-submit-grade').click()
 
         sleep(LET_ME_SLEEP_LONG)
 
