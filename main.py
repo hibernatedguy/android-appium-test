@@ -87,14 +87,13 @@ class EDTestCase(unittest.TestCase):
         recommendation_button.click()
         self.assertEqualMethodCheck(recommendation_button, 'recommendation button')
 
-    @unittest.skip("profilepage play button click")
+    # @unittest.skip("profilepage play button click")
     def test_02_play_button_click(self):
         self.appInformation()   # print app info
         sleep(LET_ME_SLEEP_SHORT)
         play_button = self.driver.find_element_by_css_selector('.bubbly-btn.play-button')
         play_button.click()
-        sleep(LET_ME_SLEEP_NAP)
-        self.tearDown()
+        sleep(LET_ME_SLEEP_NAP)        
 
     def quiz_question_test(self):
 
@@ -152,8 +151,7 @@ class EDTestCase(unittest.TestCase):
         except Exception as e:
             pass
 
-
-    # @unittest.skip("grade content test")
+    @unittest.skip("grade content test")
     def test_03_grade_content_quiz_test(self):
         sleep(LET_ME_SLEEP_SHORT)
 
@@ -175,11 +173,10 @@ class EDTestCase(unittest.TestCase):
         #quiz button
         quiz_button = self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-content/div/div/div[1]')
         vocab_button = self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-content/div/div/div[2]')
-        # quiz_button = self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/div/div[1]/button')
 
         # TESTING QUIZ QUESTIONS
         quiz_button.click()
-        self.quiz_question_test()   # test quiz
+        self.quiz_question_test()
 
         # TESTING VOCABULARY QUESTIONS
         vocab_button.click()
