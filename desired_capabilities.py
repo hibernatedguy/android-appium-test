@@ -1,16 +1,44 @@
 import os
-
+import logging
+import subprocess
+from random import randint
 
 def get_desired_capabilities(app):
     desired_caps = {
         'platformName': 'Android',
-        'platformVersion': '6.0.1',
-        'deviceName': 'DeadByCode',
+        'platformVersion': '6.0',
+        'deviceName': 'Android Emulator',
         'browserName': '',
         'autoWebview': True,
-        'newCommandTimeout': 240,
+        'autoGrantPermissions': True,
+        'resetKeyboard': True,
         'noReset': True,
+        'newCommandTimeout': 240,
         'app': os.path.abspath('/Users/Ashish/Documents/workspace/zaya/projects/apks/'+app),
     }
 
     return desired_caps
+
+
+##################
+# CONSTANTS
+##################
+CONTEXT_NAME = "WEBVIEW"
+SLEEP_LONG = 20
+SLEEP_SHORT = 10
+SLEEP_QUICK = 3
+RANDOM_START = 1
+
+CRED = '\033[91m'
+CEND = '\033[0m'
+
+
+def check_device_availability():
+    command = subprocess.getoutput("adb devices")
+    if len(command.split()) == 4 or "offline" in command:
+        print (CRED+"Oops! There is no android device available for testing.\nWe can not proceed ahead."+CEND)
+        exit()
+
+
+def random_numbers(RANDOM_END):
+    return randint(RANDOM_START, RANDOM_END)

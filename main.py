@@ -5,21 +5,27 @@ import logging
 import desired_capabilities
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import NoSuchElementException
+from appium.webdriver.common.touch_action import TouchAction
 from selenium.webdriver.common.by import By
 
 logging.basicConfig(level=logging.INFO)
 context_name = "WEBVIEW"
 
 LET_ME_SLEEP_LONG = 20
-LET_ME_SLEEP_SHORT = 10
+LET_ME_SLEEP_SHORT = 7
 LET_ME_SLEEP_NAP = 5
 LET_ME_SLEEP_QUICK = 2
+BACK_BUTTON_KEY_CODE = 4
 
+NO_CONNECT = 0
+AIRPLANE_MODE_CONNECT = 1
+WIFI_MODE_CONNECT = 2
+DATA_MODE_CONNECT = 4
+ALL_NETWORK_MODE_CONNECT = 6
 
 class EDTestCase(unittest.TestCase):
     def setUp(self):
-        desired_caps = desired_capabilities.get_desired_capabilities('zaya-mobile-pipeline-combined_4.apk')
+        desired_caps = desired_capabilities.get_desired_capabilities('26june2017.apk')
 
         # web driver remote access
         self.driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', desired_caps)
@@ -42,6 +48,18 @@ class EDTestCase(unittest.TestCase):
         negative_msg = '{} not found'.format(msg)
         positive_msg = '{} found'.format(msg)
         return self.log.info(negative_msg) if self.assertIsNotNone(element) else self.log.info(positive_msg)
+
+    def enableFlightMode(self,context):
+        driver.mobile.set_network_connection(self.driver.mobile.AIRPLANE_MODE)
+
+    def enableDataMode(self,context):
+        driver.mobile.set_network_connection(self.driver.mobile.AIRPLANE_MODE)
+
+    def enableWifiMode(self,context):
+        driver.mobile.set_network_connection(self.driver.mobile.AIRPLANE_MODE)
+
+    def enableAllMode(self,context):
+        driver.mobile.set_network_connection(self.driver.mobile.AIRPLANE_MODE)
 
     @unittest.skip("check network-connection")
     def test_000_get_network_connection(self):
@@ -87,13 +105,62 @@ class EDTestCase(unittest.TestCase):
         recommendation_button.click()
         self.assertEqualMethodCheck(recommendation_button, 'recommendation button')
 
+    def select_grade_content(self):
+        content_play_button = WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.XPATH, "/html/body/ion-nav-view/ion-nav-view/div/div[3]/button")))
+        content_play_button.click()
+
+        sleep(LET_ME_SLEEP_SHORT)
+
+        select_category = self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-content/div/div/div/div[1]')
+        select_category.click()
+
+        # load_content_button = WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.XPATH, "/html/body/ion-nav-view/ion-nav-view/div/div[3]/button")))
+        # sleep(LET_ME_SLEEP_QUICK)        
+        # load_content_button.click()
+
+        # self.goBack()        
+
+    def choose_profile(self):
+        choose_profile_button = WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.XPATH, "/html/body/ion-nav-view/ion-nav-view/div/div[2]/button")))
+        choose_profile_button.click()
+
+        select_profile = self.driver.find_element_by_xpath('//*[@id="choose-profile-view"]/div/div/div[1]')
+        select_profile.click()
+
+
     # @unittest.skip("profilepage play button click")
     def test_02_play_button_click(self):
         self.appInformation()   # print app info
-        sleep(LET_ME_SLEEP_SHORT)
-        play_button = self.driver.find_element_by_css_selector('.bubbly-btn.play-button')
-        play_button.click()
-        sleep(LET_ME_SLEEP_NAP)        
+
+        # for x in range(50):
+        #     self.select_grade_content()
+        #     sleep(LET_ME_SLEEP_SHORT)
+        #     self.goBack()
+        #     sleep(LET_ME_SLEEP_QUICK)
+        #     self.goBack()
+
+        for x in range(50):
+            self.choose_profile()
+            sleep(LET_ME_SLEEP_QUICK)
+            self.select_grade_content()
+            sleep(LET_ME_SLEEP_SHORT)
+            self.goBack()
+            sleep(LET_ME_SLEEP_SHORT)
+            self.goBack()
+
+        # skill tag click
+        # self.driver.find_element_by_xpath("/html/body/ion-nav-view/ion-nav-view/div/ion-content/div/div/div[1]/div[1]/a").click()
+        # sleep(LET_ME_SLEEP_QUICK)
+        # self.log.info("skill tag clicked")
+        #
+        # available_cards = self.driver.find_elements_by_css_selector(".cards-holder")
+        # import ipdb; ipdb.set_trace()
+        # self.driver.scroll(available_cards[0], available_cards[-1])
+
+
+        # action = TouchAction(self.driver)
+        # action.press(element_to_pull, x=10, y=10).move_to(x=10, y=400).release().perform()
+
 
     def quiz_question_test(self):
 
