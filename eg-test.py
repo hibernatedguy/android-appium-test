@@ -13,6 +13,12 @@ from random import randint
 
 logging.basicConfig(level=logging.INFO)
 
+SKILL_VOCAB_UI = 1
+SKILL_GRAMMAR = 2
+SKILL_READING = 3
+SKILL_LISTENING = 4
+
+
 class EDTestCase(unittest.TestCase):
     ''' English Duniya App testing.
     '''
@@ -21,7 +27,7 @@ class EDTestCase(unittest.TestCase):
     # application setup and settings goes here
     #####################
     def setUp(self):
-        desired_caps = get_desired_capabilities('ed-233.apk')
+        desired_caps = get_desired_capabilities('26june2017_2.apk')
 
         # web driver remote access
         self.driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', desired_caps)
@@ -41,9 +47,6 @@ class EDTestCase(unittest.TestCase):
     #####################
     # profile related stuff goes here
     #####################
-    def check_score(self):
-        se
-
     def check_current_state(self):
         sleep(SLEEP_QUICK)
         if self.driver.find_elements_by_xpath('/html/body/ion-nav-view/ion-nav-view/ion-view/ion-content/div/div[2]/button'):
@@ -64,11 +67,11 @@ class EDTestCase(unittest.TestCase):
 
     def enter_username(self):
         sleep(SLEEP_QUICK)
-        key_A = self.driver.find_element_by_id('key-A').click()
-        key_B = self.driver.find_element_by_id('key-B').click()
-        key_C = self.driver.find_element_by_id('key-C').click()
-        key_D = self.driver.find_element_by_id('key-D').click()
-        key_E = self.driver.find_element_by_id('key-E').click()
+        self.driver.find_element_by_id('key-A').click()
+        self.driver.find_element_by_id('key-B').click()
+        self.driver.find_element_by_id('key-C').click()
+        self.driver.find_element_by_id('key-D').click()
+        self.driver.find_element_by_id('key-E').click()
         self.driver.find_element_by_id('register-submit-name').click()
 
     def select_gender(self):
@@ -141,8 +144,8 @@ class EDTestCase(unittest.TestCase):
     def open_skill(self):
         self.driver.find_element_by_id('landing-start-button').click()
 
-    def skill_selection(self):
-        grade_random = randint(1,2)
+    def skill_selection(self, skill_map=None):
+        grade_random = randint(1, 3)
         grade_selection = self.driver.find_element_by_id('lesson-category-grade{}-tab'.format(grade_random))
         self.log.info(grade_selection.text)
 
@@ -154,7 +157,11 @@ class EDTestCase(unittest.TestCase):
         listening_lesson_button = self.driver.find_element_by_id('lesson-category-listening-tile')
 
         skill_list = {1: vocab_lesson_button, 2: grammar_lesson_button, 3: reading_lesson_button, 4: listening_lesson_button}
-        skill_list.get(randint(1, 1)).click()
+
+        if skill_map:
+            skill_list.get(skill_map).click()
+        else:
+            skill_list.get(randint(1, 4)).click()
 
     def lesson_selection(self):
         lesson_id = 'lesson-list-lesson{}-tile'.format(randint(1,1))
@@ -176,7 +183,7 @@ class EDTestCase(unittest.TestCase):
         if resource_vocab:
             resource_vocab[0].click()
         else:
-            self.log.info("No VOCAB UI for "+lesson_title)            
+            self.log.info("No VOCAB UI for "+lesson_title)
             self.closeApp()
 
     def open_recommendation(self):
@@ -226,8 +233,7 @@ class EDTestCase(unittest.TestCase):
             self.log.info("Report Page clicked")
 
         except Exception as e:
-            self.log.info('kuch toh fata')
-            self.log.info(str(e))
+            self.log.info('Something went wrong please check your appium log'+str(e))
             pass
 
     #####################
@@ -256,7 +262,7 @@ class EDTestCase(unittest.TestCase):
             self.select_class()
             self.select_school()
 
-    # @unittest.skip("profile switch")
+    @unittest.skip("profile switch")
     def test_002_profile_switch(self):
         # check if app is launched first time or not
         current_state = self.check_current_state()
@@ -266,12 +272,10 @@ class EDTestCase(unittest.TestCase):
             self.open_profile_list()
             self.select_profile()
 
-    @unittest.skip("take quiz")
+    # @unittest.skip("take quiz")
     def test_003_take_quiz(self):
         current_state = self.check_current_state()
         if current_state == "landing-profile-page":
-
-            self.test_002_profile_switch()
 
             self.open_skill()
             self.skill_selection()
@@ -279,22 +283,20 @@ class EDTestCase(unittest.TestCase):
             self.open_quiz()
             self.take_quiz()
 
+            sleep(SLEEP_SHORT)
             self.closeApp()
 
     # @unittest.skip("take vocab")
     def test_004_take_vocabui(self):
         current_state = self.check_current_state()
         if current_state == "landing-profile-page":
-
-            self.test_002_profile_switch()
-            sleep(SLEEP_SHORT)
-
             self.open_skill()
-            self.skill_selection()
+            self.skill_selection(SKILL_VOCAB_UI)
             self.lesson_selection()
             self.open_vocabulary()
             self.take_vocaab_ui()
 
+            sleep(SLEEP_SHORT)
             self.closeApp()
 
     # BREAK IT
