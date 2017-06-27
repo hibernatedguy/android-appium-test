@@ -44,6 +44,18 @@ class EDTestCase(unittest.TestCase):
     def goBack(self):
         self.driver.back()
 
+    def lesson_landing_back(self):
+        self.log.info('lesson landing back button clicked')
+        self.driver.find_element_by_id('lesson-landing-back-button').click()
+
+    def lesson_list_back(self):
+        self.log.info('lesson list back button clicked')
+        self.driver.find_element_by_id('lesson-list-back-button').click()
+
+    def lesson_category_home_back(self):
+        self.log.info('lesson category back button clicked')
+        self.driver.find_element_by_id('lesson-category-home-button').click()
+
     #####################
     # profile related stuff goes here
     #####################
@@ -161,7 +173,7 @@ class EDTestCase(unittest.TestCase):
         if skill_map:
             skill_list.get(skill_map).click()
         else:
-            skill_list.get(randint(1, 4)).click()
+            skill_list.get(randint(1, 3)).click()
 
     def lesson_selection(self):
         lesson_id = 'lesson-list-lesson{}-tile'.format(randint(1,1))
@@ -202,8 +214,10 @@ class EDTestCase(unittest.TestCase):
             self.log.info("submitting answer for question #"+str(key))
             sleep(SLEEP_QUICK)
         sleep(SLEEP_QUICK)
-        # submit report
-        self.driver.find_element_by_css_selector('.animated.pulse.infinite.cbtn.cbtn-block.cbtn-yellow').click()
+        # submit report        
+        result_page = self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/ion-view/ion-content/div[1]/div/div/div[3]/button')
+        self.log.info("closing report page")
+        result_page.click()
 
     def take_vocaab_ui(self):
         try:
@@ -231,9 +245,8 @@ class EDTestCase(unittest.TestCase):
             submit_button.click()
             self.profile_score_new = self.profile_score_old + 3
             self.log.info("Report Page clicked")
-
         except Exception as e:
-            self.log.info('Something went wrong please check your appium log'+str(e))
+            self.log.info('Something went wrong please check your appium log')
             pass
 
     #####################
@@ -272,49 +285,62 @@ class EDTestCase(unittest.TestCase):
             self.open_profile_list()
             self.select_profile()
 
-    # @unittest.skip("take quiz")
+    @unittest.skip("take quiz")
     def test_003_take_quiz(self):
         current_state = self.check_current_state()
-        if current_state == "landing-profile-page":
+        if current_state == "profile-selection-page":
+            self.select_profile()
+            sleep(SLEEP_QUICK)
 
+        self.open_skill()
+        self.skill_selection()
+        self.lesson_selection()
+        self.open_quiz()
+        self.take_quiz()
+
+        sleep(SLEEP_SHORT)
+        self.closeApp()
+
+    @unittest.skip("take vocab")
+    def test_004_take_vocabui(self):
+        current_state = self.check_current_state()
+        if current_state == "profile-selection-page":
+            self.select_profile()
+            sleep(SLEEP_QUICK)
+
+        self.open_skill()
+        self.skill_selection(SKILL_VOCAB_UI)
+        self.lesson_selection()
+        self.open_vocabulary()
+        self.take_vocaab_ui()
+
+        sleep(SLEEP_SHORT)
+        self.closeApp()
+
+    # BREAK IT
+    # @unittest.skip("breaking")
+    def test_001_break_it(self):
+        current_state = self.check_current_state()
+        if current_state == "profile-selection-page":
+            self.select_profile()
+            sleep(SLEEP_QUICK)
+
+        for counter in range(50):
+            self.log.info('TEST #'+str(counter))
             self.open_skill()
             self.skill_selection()
             self.lesson_selection()
             self.open_quiz()
             self.take_quiz()
 
-            sleep(SLEEP_SHORT)
-            self.closeApp()
+            self.lesson_landing_back()
+            sleep(SLEEP_QUICK)
 
-    # @unittest.skip("take vocab")
-    def test_004_take_vocabui(self):
-        current_state = self.check_current_state()
-        if current_state == "landing-profile-page":
-            self.open_skill()
-            self.skill_selection(SKILL_VOCAB_UI)
-            self.lesson_selection()
-            self.open_vocabulary()
-            self.take_vocaab_ui()
+            self.lesson_list_back()
+            sleep(SLEEP_QUICK)
 
-            sleep(SLEEP_SHORT)
-            self.closeApp()
-
-    # BREAK IT
-    @unittest.skip("breaking")
-    def test_006_break_it(self):
-        for counter in range(50):
-            self.log.info('TEST #'+str(counter))
-            self.test_001_profile_creation()
-            self.closeApp()
-
-            self.test_002_profile_switch()
-            self.closeApp()
-
-            self.test_003_take_quiz()
-            self.closeApp()
-
-            self.test_004_take_vocabui()
-            self.closeApp()
+            self.lesson_category_home_back()
+            sleep(SLEEP_QUICK)
 
 ###########################
 # Actual Code Starts Here
