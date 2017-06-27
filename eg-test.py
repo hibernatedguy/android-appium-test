@@ -154,10 +154,10 @@ class EDTestCase(unittest.TestCase):
         listening_lesson_button = self.driver.find_element_by_id('lesson-category-listening-tile')
 
         skill_list = {1: vocab_lesson_button, 2: grammar_lesson_button, 3: reading_lesson_button, 4: listening_lesson_button}
-        skill_list.get(randint(1, 4)).click()
+        skill_list.get(randint(1, 1)).click()
 
     def lesson_selection(self):
-        lesson_id = 'lesson-list-lesson{}-tile'.format(random_numbers(5))
+        lesson_id = 'lesson-list-lesson{}-tile'.format(randint(1,1))
         self.log.info('LESSON #>>'+lesson_id)
         lesson_item = WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.ID, lesson_id)))
         lesson_item.click()
