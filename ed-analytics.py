@@ -1,6 +1,8 @@
 import requests
 from time import sleep
 from settings import ACTOR_OBJECT_ID, ACCESS_TOKEN, ANALYTICS_URL
+from geopy.geocoders import Nominatim
+geolocator = Nominatim()
 
 actor_id = ACTOR_OBJECT_ID
 access_token = ACCESS_TOKEN
@@ -17,18 +19,27 @@ def get_analytics_data():
         for _data in response.get('results'):
             model = None
             version = None
+
             if 'device' in _data.get('data').keys():
                 model = _data.get('data').get('device').get('model')
                 version = _data.get('data').get('device').get('version')
 
-            response_format = "| {} | {} | {} | {} | {} | {} | {} |".format(
+            if 'location' in _data.get('data').keys():
+                try:
+                    latlong = "{},{}".format(_data.get('data').get('location').get('latitude'), _data.get('data').get('location').get('longitude'))
+                    location = ''.join(geolocator.reverse(latlong).address.split(',')[-4:])
+                except Exception as e:
+                    location = None
+
+            response_format = "| {} | {} | {} | {} | {} | {} | {} | {} |".format(
                     _data.get('timestamp'),
                     _data.get('data').get('network'),
                     _data.get('data').get('app_version'),
                     _data.get('actor_object_id'),
                     _data.get('verb'),
                     model,
-                    version
+                    version,
+                    location
                 )
 
             print (response_format)

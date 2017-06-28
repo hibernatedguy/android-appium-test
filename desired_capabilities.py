@@ -7,7 +7,7 @@ def get_desired_capabilities(app):
     desired_caps = {
         'platformName': 'Android',
         'platformVersion': '6.0',
-        'deviceName': 'Android Emulator',
+        'deviceName': 'DeadByCode',
         'browserName': '',
         'autoWebview': True,
         'autoGrantPermissions': True,
