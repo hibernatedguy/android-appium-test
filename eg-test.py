@@ -328,28 +328,28 @@ class EDTestCase(unittest.TestCase):
         for counter in range(50):
             self.log.info('TEST #'+str(counter))
 
-            # self.open_skill()
-            # self.skill_selection()
-            # self.lesson_selection()
-            # self.open_quiz()
-            # self.take_quiz()
+            self.open_skill()
+            self.skill_selection()
+            self.lesson_selection()
+            self.open_quiz()
+            self.take_quiz()
 
-            # self.lesson_landing_back()
-            # sleep(SLEEP_QUICK)
+            self.lesson_landing_back()
+            sleep(SLEEP_QUICK)
 
-            # self.lesson_list_back()
-            # sleep(SLEEP_QUICK)
+            self.lesson_list_back()
+            sleep(SLEEP_QUICK)
 
-            # self.lesson_category_home_back()
-            # sleep(SLEEP_QUICK)
+            self.lesson_category_home_back()
+            sleep(SLEEP_QUICK)
 
             # test vocabUI
 
-            self.open_skill()
-            self.skill_selection(SKILL_VOCAB_UI)
-            self.lesson_selection()
-            self.open_vocabulary()
-            self.take_vocaab_ui()
+            # self.open_skill()
+            # self.skill_selection(SKILL_VOCAB_UI)
+            # self.lesson_selection()
+            # self.open_vocabulary()
+            # self.take_vocaab_ui()
 
             sleep(SLEEP_SHORT)
 
