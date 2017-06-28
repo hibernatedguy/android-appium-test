@@ -27,7 +27,8 @@ def get_analytics_data():
             if 'location' in _data.get('data').keys():
                 try:
                     latlong = "{},{}".format(_data.get('data').get('location').get('latitude'), _data.get('data').get('location').get('longitude'))
-                    location = ''.join(geolocator.reverse(latlong).address.split(',')[-4:])
+                    # location = ''.join(geolocator.reverse(latlong).address.split(',')[-4:])
+                    location = latlong
                 except Exception as e:
                     location = None
 

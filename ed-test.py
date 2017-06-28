@@ -27,7 +27,7 @@ class EDTestCase(unittest.TestCase):
     # application setup and settings goes here
     #####################
     def setUp(self):
-        desired_caps = get_desired_capabilities('ed-240.apk')
+        desired_caps = get_desired_capabilities('ed-242.apk')
 
         # web driver remote access
         self.driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', desired_caps)
@@ -76,13 +76,19 @@ class EDTestCase(unittest.TestCase):
         elif self.driver.find_elements_by_id('profile-0') and self.driver.find_elements_by_id('profile-add'):
             self.log.info('STATE : profile create page')
             return 'can-create-profile'
+        elif self.driver.find_elements_by_id('key-A'):
+            self.log.info('STATE : Fresh Install')
+            return 'newly-installed-app'
+        elif self.driver.find_elements_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-view/ion-content/div/div/div[5]/virtual-numpad/div[3]/a[3]'):
+            self.log.info('STATE : Mobile Screen')
+            return 'phone-number-screen'
 
     def enter_username(self):
         sleep(SLEEP_QUICK)
-        self.driver.find_element_by_id('key-A').click()
-        self.driver.find_element_by_id('key-B').click()
-        self.driver.find_element_by_id('key-C').click()
-        self.driver.find_element_by_id('key-D').click()
+        self.driver.find_element_by_id('key-F').click()
+        self.driver.find_element_by_id('key-u').click()
+        self.driver.find_element_by_id('key-K').click()
+        self.driver.find_element_by_id('key-R').click()
         self.driver.find_element_by_id('key-E').click()
         self.driver.find_element_by_id('register-submit-name').click()
 
@@ -96,21 +102,33 @@ class EDTestCase(unittest.TestCase):
 
     def select_school(self):
 
-        city = self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/ion-view/ion-content/div/div[1]/div/ion-search-select[1]/div/input')
-        locality = self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/ion-view/ion-content/div/div[1]/div/ion-search-select[2]/div/input')
-        school = self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/ion-view/ion-content/div/div[1]/div/ion-search-select[3]/div/input')
+        city_selection = self.driver.find_element_by_id('profile-school-area-select')
+        # city = self.driver.find_element_by_id('profile-school-city')
 
-        city.click()
-        city.send_keys('Mumbai')
+        # locality = self.driver.find_element_by_id('profile-school-area-select')
+        # school = self.driver.find_element_by_id('profile-school-school')
+        import ipdb; ipdb.set_trace()
+        city_selection.click()
 
-        locality.click()
-        locality.send_keys('Adai')
-
-        school.click()
-        school.send_keys('Others')
+        # city.send_keys('Mumbai')
+        # locality.send_keys('Adai')
+        # school.send_keys('Others')
 
     def enter_phone_number(self):
-        pass
+        sleep(SLEEP_QUICK)
+        self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-view/ion-content/div/div/div[5]/virtual-numpad/div[3]/a[3]').click()
+        self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-view/ion-content/div/div/div[5]/virtual-numpad/div[1]/a[1]').click()
+        self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-view/ion-content/div/div/div[5]/virtual-numpad/div[1]/a[2]').click()
+        self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-view/ion-content/div/div/div[5]/virtual-numpad/div[1]/a[3]').click()
+        self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-view/ion-content/div/div/div[5]/virtual-numpad/div[2]/a[1]').click()
+        self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-view/ion-content/div/div/div[5]/virtual-numpad/div[2]/a[2]').click()
+        self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-view/ion-content/div/div/div[5]/virtual-numpad/div[2]/a[3]').click()
+        self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-view/ion-content/div/div/div[5]/virtual-numpad/div[3]/a[1]').click()
+        self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-view/ion-content/div/div/div[5]/virtual-numpad/div[3]/a[2]').click()
+        self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-view/ion-content/div/div/div[5]/virtual-numpad/div[3]/a[3]').click()
+
+        # button click
+        self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/div/ion-view/ion-content/div/div/div[6]/button').click()
 
     def select_profile(self):
         profile = self.driver.find_element_by_id('profile-0')
@@ -148,10 +166,22 @@ class EDTestCase(unittest.TestCase):
 
     #####################
     # content related stuff goes here
-    #####################
+    #####################    
     def take_diagnosis(self):
         # start diagnosis button click
-        self.driver.find_element_by_xpath('/html/body/ion-nav-view/ion-nav-view/ion-view/div/div/div[2]/button').click()
+        sleep(SLEEP_QUICK)
+        self.driver.find_element_by_id('diagnosis-start-button').click()
+        counter = 0
+        while True:
+            submit_button_visibility = self.driver.find_elements_by_id('diagnosis-result-button')
+            if not submit_button_visibility:
+                self.log.info('diagnosis-question-{}-option-{}'.format(counter, randint(0,2)))
+                self.driver.find_element_by_id('diagnosis-question-{}-option-{}'.format(counter, randint(0,2))).click()
+                counter = counter + 1
+                sleep(SLEEP_SHORT)
+            else:
+                break
+        self.driver.find_element_by_id('diagnosis-result-button').click()
 
     def open_skill(self):
         self.driver.find_element_by_id('landing-start-button').click()
@@ -260,6 +290,8 @@ class EDTestCase(unittest.TestCase):
             self.select_school()
         elif 'diagnosis-screen' == current_state:
             self.take_diagnosis()
+            self.closeApp()
+
         elif 'can-create-profile' == current_state or current_state == "profile-selection-page":
             self.open_profile_list()
             self.profile_add()
@@ -267,12 +299,23 @@ class EDTestCase(unittest.TestCase):
             self.select_gender()
             self.select_class()
             self.select_school()
+        if 'newly-installed-app' == current_state:
+            self.log.info('creating new user')
+            self.enter_username()
+            self.select_gender()
+            self.select_class()
+            self.enter_phone_number()
+            self.select_school()
+        if 'phone-number-screen' == current_state:            
+            self.enter_phone_number()
+            self.select_school()
         else:
             self.open_profile_list()
             self.profile_add()
             self.enter_username()
             self.select_gender()
             self.select_class()
+            self.enter_phone_number()
             self.select_school()
 
     @unittest.skip("profile switch")
@@ -318,7 +361,7 @@ class EDTestCase(unittest.TestCase):
         self.closeApp()
 
     # BREAK IT
-    # @unittest.skip("breaking")
+    @unittest.skip("breaking")
     def test_001_break_it(self):
         current_state = self.check_current_state()
         if current_state == "profile-selection-page":
@@ -345,14 +388,31 @@ class EDTestCase(unittest.TestCase):
 
             # test vocabUI
 
-            # self.open_skill()
-            # self.skill_selection(SKILL_VOCAB_UI)
-            # self.lesson_selection()
-            # self.open_vocabulary()
-            # self.take_vocaab_ui()
+            self.open_skill()
+            self.skill_selection(SKILL_VOCAB_UI)
+            self.lesson_selection()
+            self.open_vocabulary()
+            self.take_vocaab_ui()
+
+            self.lesson_landing_back()
+            sleep(SLEEP_QUICK)
+
+            self.lesson_list_back()
+            sleep(SLEEP_QUICK)
+
+            self.lesson_category_home_back()
+            sleep(SLEEP_QUICK)
 
             sleep(SLEEP_SHORT)
 
+    def test_0001_scroll_lesson_it(self):
+        current_state = self.check_current_state()
+        if current_state == "profile-selection-page":
+            self.select_profile()
+            sleep(SLEEP_QUICK)
+
+        self.open_skill()
+        self.skill_selection()
 
 
 
