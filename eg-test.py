@@ -27,7 +27,7 @@ class EDTestCase(unittest.TestCase):
     # application setup and settings goes here
     #####################
     def setUp(self):
-        desired_caps = get_desired_capabilities('26june2017_2.apk')
+        desired_caps = get_desired_capabilities('ed-240.apk')
 
         # web driver remote access
         self.driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', desired_caps)
@@ -327,20 +327,34 @@ class EDTestCase(unittest.TestCase):
 
         for counter in range(50):
             self.log.info('TEST #'+str(counter))
+
+            # self.open_skill()
+            # self.skill_selection()
+            # self.lesson_selection()
+            # self.open_quiz()
+            # self.take_quiz()
+
+            # self.lesson_landing_back()
+            # sleep(SLEEP_QUICK)
+
+            # self.lesson_list_back()
+            # sleep(SLEEP_QUICK)
+
+            # self.lesson_category_home_back()
+            # sleep(SLEEP_QUICK)
+
+            # test vocabUI
+
             self.open_skill()
-            self.skill_selection()
+            self.skill_selection(SKILL_VOCAB_UI)
             self.lesson_selection()
-            self.open_quiz()
-            self.take_quiz()
+            self.open_vocabulary()
+            self.take_vocaab_ui()
 
-            self.lesson_landing_back()
-            sleep(SLEEP_QUICK)
+            sleep(SLEEP_SHORT)
 
-            self.lesson_list_back()
-            sleep(SLEEP_QUICK)
 
-            self.lesson_category_home_back()
-            sleep(SLEEP_QUICK)
+
 
 ###########################
 # Actual Code Starts Here
