@@ -27,11 +27,11 @@ class EDTestCase(unittest.TestCase):
     # application setup and settings goes here
     #####################
     def setUp(self):
-        desired_caps = get_desired_capabilities('ed-242.apk')
+        desired_caps = get_desired_capabilities('ed-243.apk')
 
         # web driver remote access
         self.driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', desired_caps)
-        self.driver.switch_to.context(self.driver.contexts[-1])
+        # self.driver.switch_to.context(self.driver.contexts[-1])
         self.profile_score = 0
         self.log = logging.getLogger('ed-logger # ')
 
@@ -211,6 +211,52 @@ class EDTestCase(unittest.TestCase):
         lesson_item = WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.ID, lesson_id)))
         lesson_item.click()
         sleep(SLEEP_QUICK)
+
+    def lesson_list_selection(self):
+        LAST_SKILL = 0
+        for grade_item in range(1,4):
+            sleep(SLEEP_QUICK)
+            # import ipdb; ipdb.set_trace()
+            grade_selection = WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.ID, 'lesson-category-grade{}-tab'.format(grade_item))))
+            self.log.info(grade_selection.text)
+            grade_selection.click()
+
+            sleep(SLEEP_QUICK)            
+            vocab_lesson_button = WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.ID, "lesson-category-vocabulary-tile")))
+            grammar_lesson_button = WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.ID, "lesson-category-grammar-tile")))
+            reading_lesson_button = WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.ID, "lesson-category-reading-tile")))
+            listening_lesson_button = WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.ID, "lesson-category-listening-tile")))
+            skill_list = {1: vocab_lesson_button, 2: grammar_lesson_button, 3: reading_lesson_button, 4: listening_lesson_button}
+
+            for skill in skill_list:
+                if skill == 1:
+                    WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.ID, "lesson-category-vocabulary-tile"))).click()
+                elif skill == 2:
+                    WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.ID, "lesson-category-grammar-tile"))).click()
+                elif skill == 3:
+                    WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.ID, "lesson-category-reading-tile"))).click()
+                elif skill == 4:
+                    WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.ID, "lesson-category-listening-tile"))).click()            
+                sleep(SLEEP_QUICK)
+                lesson_list = self.driver.find_elements_by_css_selector('.cards-holder.cards-md.animated.fadeIn')
+                for index, lesson in enumerate(lesson_list):
+                    sleep(SLEEP_QUICK)
+                    lesson_id = 'lesson-list-lesson{}-tile'.format(index)
+                    self.log.info('LESSON #>>'+lesson_id)
+                    lesson_item = WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.ID, lesson_id)))
+                    if index == 0:
+                        break
+
+                    lesson_item.click()
+                    sleep(SLEEP_QUICK)
+
+                    # TAKE QUIZ
+                    self.open_quiz()
+                    self.take_quiz()
+                    sleep(SLEEP_QUICK)
+
+                self.lesson_list_back()
+                sleep(SLEEP_QUICK)
 
     def open_quiz(self):
         lesson_title = self.driver.find_element_by_id('lesson-landing-title').text
@@ -412,7 +458,7 @@ class EDTestCase(unittest.TestCase):
             sleep(SLEEP_QUICK)
 
         self.open_skill()
-        self.skill_selection()
+        self.lesson_list_selection()
 
 
 
