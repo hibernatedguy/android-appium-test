@@ -6,8 +6,8 @@ from random import randint
 def get_desired_capabilities(app):
     desired_caps = {
         'platformName': 'Android',
-        'platformVersion': '6.0',
-        'deviceName': 'DeadByCode',
+        'platformVersion': '5.1.1',
+        'deviceName': 'Galaxy J2',
         'browserName': '',
         'autoWebview': True,
         'autoGrantPermissions': True,

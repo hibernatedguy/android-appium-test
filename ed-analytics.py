@@ -19,6 +19,7 @@ def get_analytics_data():
         for _data in response.get('results'):
             model = None
             version = None
+            location = None
 
             if 'device' in _data.get('data').keys():
                 model = _data.get('data').get('device').get('model')
@@ -30,7 +31,7 @@ def get_analytics_data():
                     # location = ''.join(geolocator.reverse(latlong).address.split(',')[-4:])
                     location = latlong
                 except Exception as e:
-                    location = None
+                    pass
 
             response_format = "| {} | {} | {} | {} | {} | {} | {} | {} |".format(
                     _data.get('timestamp'),
