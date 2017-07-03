@@ -216,7 +216,7 @@ class EDTestCase(unittest.TestCase):
     def lesson_list_selection(self):
         LAST_SKILL = 0
         for grade_item in range(1,4):
-            if grade_item == 1:
+            if grade_item <= 2:
                 continue
             self.log.info(" ")
             sleep(SLEEP_QUICK)
@@ -236,6 +236,7 @@ class EDTestCase(unittest.TestCase):
                 if skill == 1:
                     vocab = WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.ID, "lesson-category-vocabulary-tile")))
                     self.log.info('#SKILL {}'.format(vocab.text))
+                    continue
                     vocab.click()                    
                 elif skill == 2:
                     grammar = WebDriverWait(self.driver, 30).until(EC.presence_of_element_located((By.ID, "lesson-category-grammar-tile")))
@@ -254,6 +255,9 @@ class EDTestCase(unittest.TestCase):
                 lesson_list = self.driver.find_elements_by_css_selector('.cards-holder.cards-md.animated.fadeIn')
                 self.log.info("COUNT "+str(len(lesson_list)))
                 for index, lesson in enumerate(lesson_list):
+                    # if index <= 7:
+                    #     continue
+
                     sleep(SLEEP_QUICK)
                     lesson_id = 'lesson-list-lesson{}-tile'.format(index)
                     self.log.info('LESSON #>>'+lesson_id)
@@ -410,6 +414,7 @@ class EDTestCase(unittest.TestCase):
         self.open_skill()
         self.skill_selection()
         self.lesson_selection()
+
         self.open_quiz()
         self.take_quiz()
 
@@ -426,6 +431,8 @@ class EDTestCase(unittest.TestCase):
         self.open_skill()
         self.skill_selection(SKILL_VOCAB_UI)
         self.lesson_selection()
+        
+
         self.open_vocabulary()
         self.take_vocaab_ui()
 
