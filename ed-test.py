@@ -27,7 +27,7 @@ class EDTestCase(unittest.TestCase):
     # application setup and settings goes here
     #####################
     def setUp(self):
-        desired_caps = get_desired_capabilities('ed-248.apk')
+        desired_caps = get_desired_capabilities('269.apk')
 
         # web driver remote access
         self.driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', desired_caps)
@@ -216,8 +216,8 @@ class EDTestCase(unittest.TestCase):
     def lesson_list_selection(self):
         LAST_SKILL = 0
         for grade_item in range(1,4):
-            if grade_item <= 2:
-                continue
+            # if grade_item <= 2:
+            #     continue
             self.log.info(" ")
             sleep(SLEEP_QUICK)
             # import ipdb; ipdb.set_trace()

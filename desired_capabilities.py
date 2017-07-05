@@ -14,7 +14,7 @@ def get_desired_capabilities(app):
         'resetKeyboard': True,
         'noReset': True,
         'newCommandTimeout': 240,
-        'app': os.path.abspath('/Users/Ashish/Documents/workspace/zaya/projects/apks/'+app),
+        'app': os.path.abspath('/Users/ashishtiwari/Workspace/zaya/apks/'+app),
     }
 
     return desired_caps
