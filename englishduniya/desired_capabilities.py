@@ -1,5 +1,4 @@
 import os
-import logging
 import subprocess
 from random import randint
 
@@ -37,7 +36,7 @@ CEND = '\033[0m'
 def check_device_availability():
     command = subprocess.getoutput("adb devices")
     if len(command.split()) == 4 or "offline" in command:
-        print (CRED + "Oops! There is no android device available for testing.\nWe can not proceed ahead." + CEND)
+        print (CRED + "Oops! There is no AndroidDevice. available for testing.\nPlease connect AndroidDevice and try again." + CEND)
         exit()
 
 
