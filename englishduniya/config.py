@@ -15,17 +15,18 @@ from desired_capabilities import (get_desired_capabilities, SLEEP_SHORT,
                                   SLEEP_LONG, SLEEP_QUICK, check_device_availability,
                                   random_numbers)
 
-
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger('ed-logger # ')
 
 
+
 class EnglishDuniyaSetup(unittest.TestCase):
+
     ''' English Duniya App Testing
     '''
 
     def setUp(self):
-        desired_caps = get_desired_capabilities('269.apk')
+        desired_caps = get_desired_capabilities('285.apk')
         self.driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', desired_caps)
         self.profile_score = 0
 
@@ -46,9 +47,18 @@ class EnglishDuniyaSetup(unittest.TestCase):
             'by_xpath': self.driver.find_element_by_xpath,
         }
 
+        self.config_find_elements = {
+            'by_id': self.driver.find_elements_by_id,
+            'by_css_selector': self.driver.find_elements_by_css_selector,
+            'by_xpath': self.driver.find_elements_by_xpath,
+        }
+
     def let_me_sleep(self, wait_time):
         return sleep(wait_time)
 
+    ##################
+    # WAIT ELEMENT
+    ##################
     def wait_for_element(self, method, element_key, wait_time):
         return WebDriverWait(self.driver, wait_time).until(EC.presence_of_element_located((self.config_wait_for_element.get(method), element_key)))
 
@@ -57,18 +67,41 @@ class EnglishDuniyaSetup(unittest.TestCase):
             EC.presence_of_element_located((self.config_wait_for_element.get(method), element_key)))
         _elemet.click()
 
-    def find_element(self, method, element_key, wait_time):
-        sleep(0)
+    ############
+    # ELEMENT 
+    ############
+    def find_element_and_wait(self, method, element_key, wait_time):
+        _wait_time = wait_time if wait_time else 0
+        sleep(_wait_time)
         return self.config_find_element.get(method)(element_key)
 
     def find_element_and_click(self, method, element_key, wait_time):
         select_element = self.config_find_element.get(method)(element_key)
         select_element.click()
 
-    def find_element_wait_and_click(self, method, element_key, wait_time):
+    def find_element_click_and_wait(self, method, element_key, wait_time):
         select_element = self.config_find_element.get(method)(element_key)
         select_element.click()
         sleep(wait_time)
+
+    ############
+    # ELEMENTS
+    ############
+    def find_elements_and_wait(self, method, element_key, wait_time):
+        _wait_time = wait_time if wait_time else 0
+        sleep(_wait_time)
+        return self.config_find_elements.get(method)(element_key)
+
+    def find_elements_and_click(self, method, element_key, wait_time):
+        select_element = self.config_find_elements.get(method)(element_key)
+        select_element.click()
+
+    def find_elements_wait_and_click(self, method, element_key, wait_time):
+        select_element = self.config_find_elements.get(method)(element_key)
+        select_element.click()
+        sleep(wait_time)
+
+
 
     def close_app(self):
         self.driver.quit()
