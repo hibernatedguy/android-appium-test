@@ -376,17 +376,23 @@ class EDTestCase(unittest.TestCase):
         try:
             next_button = WebDriverWait(self.driver, 30).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, ".sbtn.sbtn-arrow-forward")))
+
+            
             self.log.info("next button is visible")
             WebDriverWait(self.driver, 30).until(EC.presence_of_element_located(
                 (By.CSS_SELECTOR, ".flash-card.align-middle")))
             vocab_cards = self.driver.find_elements_by_css_selector(
                 ".flash-card.align-middle")
             self.log.info("all vocab cards are available")
+
+
+
             for key, vocab_card in enumerate(vocab_cards):
                 self.log.info("VocabCard #" + str(key))
                 next_button_active = WebDriverWait(self.driver, 30).until(
                     EC.presence_of_element_located((By.CSS_SELECTOR, ".sbtn.sbtn-arrow-forward")))
                 next_button_active.click()
+
                 self.log.info("Next button clicked")
                 sleep(SLEEP_QUICK)
 

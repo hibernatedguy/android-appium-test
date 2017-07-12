@@ -10,7 +10,7 @@ from selenium.webdriver.common.by import By
 
 from desired_capabilities import (get_desired_capabilities)
 
-logging.basicConfig(filename='ed-logger.log',  filemode='w', level=logging.INFO, format='%(asctime)s : %(message)s')
+logging.basicConfig(filename='ed-logger.log', filemode='w', level=logging.INFO, format='%(asctime)s : %(message)s')
 log = logging.getLogger('ed-logger # ')
 
 
@@ -22,6 +22,7 @@ class EnglishDuniyaSetup(unittest.TestCase):
     def setUp(self):
         desired_caps = get_desired_capabilities('285.apk')
         self.driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', desired_caps)
+
         self.profile_score = 0
 
         self.default_wait = 3
@@ -109,3 +110,7 @@ class EnglishDuniyaSetup(unittest.TestCase):
 
     def go_back(self):
         self.driver.back()
+
+    def reset_app(self):
+        log.info('RESETTING APP')
+        self.driver.reset()

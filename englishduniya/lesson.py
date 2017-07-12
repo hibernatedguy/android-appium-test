@@ -177,13 +177,15 @@ class LessonTestCase(EnglishDuniyaSetup):
 
         log.info('OPENING lesson #{}'.format(lesson_title))
         log.info('CHECK available resources')
+
+        # wait for 3sec
+        self.let_me_sleep(3)
+
         # check resource availability
-        quiz_button = self.find_elements_and_wait('by_id', 'lesson-landing-resource-assessment-tile', 2)
-        vocab_button = self.find_elements_and_wait('by_id', 'lesson-landing-resource-vocabulary-tile', 2)
-        recommendation_button = self.find_elements_and_wait('by_id', 'landing-start-button', 2)
-        video_resource_button = self.find_elements_and_wait('by_id', 'lesson-landing-resource-resource-tile', 2)
-
-
+        quiz_button = self.find_elements_and_wait('by_id', 'lesson-landing-resource-assessment-tile', 0)
+        vocab_button = self.find_elements_and_wait('by_id', 'lesson-landing-resource-vocabulary-tile', 0)
+        recommendation_button = self.find_elements_and_wait('by_id', 'landing-start-button', 0)
+        video_resource_button = self.find_elements_and_wait('by_id', 'lesson-landing-resource-resource-tile', 0)
 
         if video_resource_button:
             log.info('video content available')
