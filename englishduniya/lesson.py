@@ -131,8 +131,8 @@ class LessonTestCase(EnglishDuniyaSetup):
     ##############################
 
     def click_start_button(self):
-        app_version = self.find_element_and_wait('by_xpath',
-                                                 '/html/body/ion-nav-view/ion-nav-view/div/div[1]', 1).text
+        app_version = self.wait_for_element('by_xpath',
+                                            '/html/body/ion-nav-view/ion-nav-view/div/div[1]', 30).text
         log.info("### APP VERSION ### {} ### ".format(app_version))
         self.wait_for_element_and_click('by_id', 'landing-start-button', 30)
 
