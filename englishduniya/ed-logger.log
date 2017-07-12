@@ -1,5 +1,26 @@
-2017-07-12 19:06:13,863 : ### grade_1_content_GRAMMAR --- WEBVIEW_com.ionicframework.zayamobile694033 ###
-2017-07-12 19:06:21,670 : ### APP VERSION ### v 1.2.94 rc 0.1.0 sc 0.0.0 ### 
-2017-07-12 19:06:25,423 : selecting grade #1
-2017-07-12 19:06:26,287 : selecting skill #2
-2017-07-12 19:06:28,187 : PREPARE lesson list..
+2017-07-12 23:19:18,243 : ### grade_2_content_VOCAB --- WEBVIEW_com.ionicframework.zayamobile694033 ###
+2017-07-12 23:19:25,169 : ### APP VERSION ### v 1.2.94 rc 0.1.0 sc 0.0.0 ### 
+2017-07-12 23:19:28,810 : selecting grade #2
+2017-07-12 23:19:30,226 : selecting skill #1
+2017-07-12 23:19:32,890 : PREPARE lesson list..
+2017-07-12 23:19:48,391 : TESTING FOR #6 lessons.
+2017-07-12 23:19:48,391 : lesson #1
+2017-07-12 23:19:57,018 : OPENING lesson #House
+2017-07-12 23:19:57,018 : CHECK available resources
+2017-07-12 23:20:00,637 : NO video content
+2017-07-12 23:20:00,637 : quiz resource is available
+2017-07-12 23:20:00,638 : vocab content is available
+2017-07-12 23:20:00,638 : OPENING vocabui
+2017-07-12 23:20:01,375 : TAKING vocabui
+2017-07-12 23:20:36,587 : AVAILABLE VOCAB CARDS #5
+2017-07-12 23:20:36,588 : SELECTING 1 vocab-card
+2017-07-12 23:20:41,502 : submit_button_inactive not visible
+2017-07-12 23:20:41,503 : SELECTING 2 vocab-card
+2017-07-12 23:20:45,966 : submit_button_inactive not visible
+2017-07-12 23:20:45,966 : SELECTING 3 vocab-card
+2017-07-12 23:20:50,451 : submit_button_inactive not visible
+2017-07-12 23:20:50,451 : SELECTING 4 vocab-card
+2017-07-12 23:21:00,630 : SUBMIT vocab
+2017-07-12 23:21:04,932 : recommended lesson is available
+2017-07-12 23:21:04,933 : lesson landing back button clicked
+2017-07-12 23:21:06,916 : lesson #2

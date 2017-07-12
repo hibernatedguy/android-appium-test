@@ -20,7 +20,7 @@ class EnglishDuniyaSetup(unittest.TestCase):
     '''
 
     def setUp(self):
-        desired_caps = get_desired_capabilities('285.apk')
+        desired_caps = get_desired_capabilities('308_hi.apk')
         self.driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', desired_caps)
 
         self.profile_score = 0
@@ -78,6 +78,7 @@ class EnglishDuniyaSetup(unittest.TestCase):
         return self.config_find_element.get(method)(element_key)
 
     def find_element_wait_and_click(self, method, element_key, wait_time=0):
+        sleep(wait_time)
         select_element = self.config_find_element.get(method)(element_key)
         select_element.click()
 
@@ -93,22 +94,15 @@ class EnglishDuniyaSetup(unittest.TestCase):
         sleep(wait_time)
         return self.config_find_elements.get(method)(element_key)
 
-    def find_elements_and_click(self, method, element_key, wait_time=0):
-        select_element = self.config_find_elements.get(method)(element_key)
-        select_element.click()
-
-    def find_elements_wait_and_click(self, method, element_key, wait_time=0):
-        select_element = self.config_find_elements.get(method)(element_key)
-        select_element.click()
-        sleep(wait_time)
-
     ####################
     # HARDWARE BUTTONS
     ####################
     def close_app(self):
+        log.info('CLOSING APP')
         self.driver.quit()
 
     def go_back(self):
+        log.info('BACK BUTTON PRESSED')
         self.driver.back()
 
     def reset_app(self):
