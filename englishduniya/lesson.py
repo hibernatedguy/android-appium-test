@@ -8,6 +8,11 @@ GRADE_ONE = 1
 GRADE_TWO = 2
 GRADE_THREE = 3
 
+GRADE_SKILL_VOCAB = 1
+GRADE_SKILL_GRAMMAR = 2
+GRADE_SKILL_READING = 3
+GRADE_SKILL_LISTENING = 4
+
 
 class LessonTestCase(EnglishDuniyaSetup):
     ##########################################
@@ -126,12 +131,18 @@ class LessonTestCase(EnglishDuniyaSetup):
     ##############################
 
     def click_start_button(self):
+        app_version = self.find_element_and_wait('by_xpath',
+                                                 '/html/body/ion-nav-view/ion-nav-view/div/div[1]', 1).text
+        log.info("### APP VERSION ### {} ### ".format(app_version))
         self.wait_for_element_and_click('by_id', 'landing-start-button', 30)
 
     def lesson_grade_selection(self, grade_item):
+        log.info("selecting grade #{}".format(grade_item))
         self.wait_for_element_and_click('by_id', 'lesson-category-grade{}-tab'.format(grade_item), 30)
 
     def lesson_grade_skill_selection(self, skill_item):
+        log.info("selecting skill #{}".format(skill_item))
+
         vocab_lesson_button = self.wait_for_element('by_id', 'lesson-category-vocabulary-tile', 30)
         grammar_lesson_button = self.wait_for_element('by_id', 'lesson-category-grammar-tile', 30)
         reading_lesson_button = self.wait_for_element('by_id', 'lesson-category-reading-tile', 30)
@@ -142,7 +153,7 @@ class LessonTestCase(EnglishDuniyaSetup):
         skill_list.get(skill_item).click()
 
     def lesson_list(self):
-        log.info('preaparing lesson list..')
+        log.info('PREPARE lesson list..')
         self.let_me_sleep(10)   # wait for 30sec and get the list of lessons
         lesson_list = self.find_elements_and_wait('by_css_selector', '.cards-holder.cards-md.animated.fadeIn', 5)
         log.info("TESTING FOR #{} lessons.".format(len(lesson_list)))
@@ -154,37 +165,60 @@ class LessonTestCase(EnglishDuniyaSetup):
         2. check vocabulary available
         3. check video available
         4. check recommended lesson available'''
+        lesson_title = self.find_element_and_wait('by_id', 'lesson-landing-title', 2).text
 
-        # open quiz
-        quiz_button = self.wait_for_element('by_id', 'lesson-landing-resource-assessment-tile', 4)
-        vocab_button = self.wait_for_element('by_id', 'lesson-landing-resource-vocabulary-tile', 4)
-        recommendation_button = self.wait_for_element('by_id', 'landing-start-button', 4)
-        video_resource_button = self.wait_for_element('by_id', 'lesson-landing-resource-resource-tile', 4)
+        log.info('OPENING lesson #{}'.format(lesson_title))
+        log.info('CHECK available resources')
+        # check resource availability
+        quiz_button = self.find_elements_and_wait('by_id', 'lesson-landing-resource-assessment-tile', 2)
+        vocab_button = self.find_elements_and_wait('by_id', 'lesson-landing-resource-vocabulary-tile', 2)
+        recommendation_button = self.find_elements_and_wait('by_id', 'landing-start-button', 2)
+        video_resource_button = self.find_elements_and_wait('by_id', 'lesson-landing-resource-resource-tile', 2)
 
         if quiz_button is not None:
-            self.open_quiz()
-            self.take_quiz()
-            # self.take_recommended_lesson()
-            self.lesson_landing_back()
+            log.info('quiz resource is available')
+            # self.open_quiz()
+            # self.take_quiz()
+            # # self.take_recommended_lesson()
+            # self.lesson_landing_back()
+        else:
+            log.info('NO quiz resource')
 
-        if vocab_button is not None:
-            pass
+        if vocab_button:
+            log.info('vocab content is available')
+        else:
+            log.info('NO vocab content')
 
-        if recommendation_button is not None:
-            pass
+        if recommendation_button:
+            log.info('recommended lesson is available')
+        else:
+            log.info('NO recommendation content')
 
-        if video_resource_button is not None:
-            pass
+        if video_resource_button:
+            log.info('video resource is available')
+        else:
+            log.info('NO video content')
 
     def lesson_selection(self):
+        ''' select lesson from lesson list
+            1. get the lesson list
+            2. open lesson
+            3. select resource based on the availability
+            4. close the once all the resources are consumed
+        '''
         for index, lesson in enumerate(self.lesson_list()):
-            log.info("lesson" + str(index + 1))
-            if index < 5:
-                continue
 
+            log.info("lesson #{}".format(index))
             lesson_id = 'lesson-list-lesson{}-tile'.format(index)
+
             self.wait_for_element_and_click('by_id', lesson_id, 30)
-            self.let_me_sleep(3)
+            self.let_me_sleep(5)
+
+            # resource check
+            self.lesson_resource_selection()
+
+            # select available resource
+            self.lesson_landing_back()
 
     ##############################################
     # TEST CASES GOES HERE
@@ -196,36 +230,150 @@ class LessonTestCase(EnglishDuniyaSetup):
     # 5. grade 3 content consumption
     ##############################################
     @unittest.skip("start lesson selection")
-    def test_lesson_001_start_lesson_selection(self):
+    def test_lesson_101_start_lesson_selection(self):
         self.click_start_button()
         self.let_me_sleep(3)
         self.go_back()
 
     @unittest.skip("lesson selection in loop")
-    def test_lesson_002_start_lesson_selection_loop(self):
+    def test_lesson_102_start_lesson_selection_loop(self):
         for counter in range(100):
             self.click_start_button()
             self.let_me_sleep(2)
             self.go_back()
 
-    # @unittest.skip("grade1")
-    def test_lesson_003_start_take_grade_1_content(self):
+    ##############################
+    # GRADE 1 CONTANT TESTCASES
+    # CAN AUTOMATE BY LOOPING GRADE_SKILLS
+    # INTENTIONALLY CREATED
+    ##############################
+    # @unittest.skip("grade1_VOCAB")
+    def test_lesson_103_start_take_grade_1_content_VOCAB(self):
+        self.app_informtion("grade_1_content_VOCAB")
+
         self.click_start_button()
         self.let_me_sleep(2)
         self.lesson_grade_selection(GRADE_ONE)
-        self.lesson_grade_skill_selection(1)
+        self.lesson_grade_skill_selection(GRADE_SKILL_VOCAB)
         self.lesson_selection()
 
-    @unittest.skip("grade2")
-    def test_lesson_004_start_take_grade_2_content(self):
+    # @unittest.skip("grade1_GRAMMAR")
+    def test_lesson_104_start_take_grade_1_content_GRAMMAR(self):
+        self.app_informtion("grade_1_content_GRAMMAR")
+
+        # log.info("lesson test")
+        self.click_start_button()
+        self.let_me_sleep(2)
+        self.lesson_grade_selection(GRADE_ONE)
+        self.lesson_grade_skill_selection(GRADE_SKILL_GRAMMAR)
+        self.lesson_selection()
+
+    # @unittest.skip("grade1_READING")
+    def test_lesson_105_start_take_grade_1_content_READING(self):
+        self.app_informtion("grade_1_content_READING")
+
+        self.click_start_button()
+        self.let_me_sleep(2)
+        self.lesson_grade_selection(GRADE_ONE)
+        self.lesson_grade_skill_selection(GRADE_SKILL_READING)
+        self.lesson_selection()
+
+    # @unittest.skip("grade1_LISTENING")
+    def test_lesson_106_start_take_grade_1_content_LISTENING(self):
+        self.app_informtion("grade_1_content_LISTENING")
+
+        self.click_start_button()
+        self.let_me_sleep(2)
+        self.lesson_grade_selection(GRADE_ONE)
+        self.lesson_grade_skill_selection(GRADE_SKILL_LISTENING)
+        self.lesson_selection()
+
+    ##############################
+    # GRADE 2 CONTANT TESTCASES
+    # CAN AUTOMATE BY LOOPING GRADE_SKILLS
+    # INTENTIONALLY CREATED
+    ##############################
+    # @unittest.skip("grade2_VOCAB")
+    def test_lesson_107_start_take_grade_2_content_VOCAB(self):
+        self.app_informtion("grade_2_content_VOCAB")
+
         self.click_start_button()
         self.let_me_sleep(2)
         self.lesson_grade_selection(GRADE_TWO)
-        self.lesson_grade_skill_selection(2)
+        self.lesson_grade_skill_selection(GRADE_SKILL_VOCAB)
+        self.lesson_selection()
 
-    @unittest.skip("grade3")
-    def test_lesson_005_start_take_grade_3_content(self):
+    # @unittest.skip("grade2_GRAMMAR")
+    def test_lesson_108_start_take_grade_2_content_GRAMMAR(self):
+        self.app_informtion("grade_2_content_GRAMMAR")
+
+        self.click_start_button()
+        self.let_me_sleep(2)
+        self.lesson_grade_selection(GRADE_TWO)
+        self.lesson_grade_skill_selection(GRADE_SKILL_GRAMMAR)
+        self.lesson_selection()
+
+    # @unittest.skip("grade2_READING")
+    def test_lesson_109_start_take_grade_2_content_READING(self):
+        self.app_informtion("grade_2_content_READING")
+
+        self.click_start_button()
+        self.let_me_sleep(2)
+        self.lesson_grade_selection(GRADE_TWO)
+        self.lesson_grade_skill_selection(GRADE_SKILL_READING)
+        self.lesson_selection()
+
+    # @unittest.skip("grade2_LISTENING")
+    def test_lesson_110_start_take_grade_2_content_LISTENING(self):
+        self.app_informtion("grade_2_content_LISTENING")
+
+        self.click_start_button()
+        self.let_me_sleep(2)
+        self.lesson_grade_selection(GRADE_TWO)
+        self.lesson_grade_skill_selection(GRADE_SKILL_LISTENING)
+        self.lesson_selection()
+
+    ##############################
+    # GRADE 3 CONTANT TESTCASES
+    # CAN AUTOMATE BY LOOPING GRADE_SKILLS
+    # INTENTIONALLY CREATED
+    ##############################
+    # @unittest.skip("grade3_VOCAB")
+    def test_lesson_111_start_take_grade_3_content_VOCAB(self):
+        self.app_informtion("grade_3_content_VOCAB")
+
         self.click_start_button()
         self.let_me_sleep(2)
         self.lesson_grade_selection(GRADE_THREE)
-        self.lesson_grade_skill_selection(2)
+        self.lesson_grade_skill_selection(GRADE_SKILL_VOCAB)
+        self.lesson_selection()
+
+    # @unittest.skip("grade3_GRAMMAR")
+    def test_lesson_112_start_take_grade_3_content_GRAMMAR(self):
+        self.app_informtion("grade_3_content_GRAMMAR")
+
+        self.click_start_button()
+        self.let_me_sleep(2)
+        self.lesson_grade_selection(GRADE_THREE)
+        self.lesson_grade_skill_selection(GRADE_SKILL_GRAMMAR)
+        self.lesson_selection()
+
+    # @unittest.skip("grade3_READING")
+    def test_lesson_113_start_take_grade_3_content_READING(self):
+        self.app_informtion("grade_3_content_READING")
+
+        self.click_start_button()
+        self.let_me_sleep(2)
+        self.lesson_grade_selection(GRADE_THREE)
+        self.lesson_grade_skill_selection(GRADE_SKILL_READING)
+        self.lesson_selection()
+
+    # @unittest.skip("grade3_LISTENING")
+    def test_lesson_114_start_take_grade_3_content_LISTENING(self):
+        self.app_informtion("grade_3_content_LISTENING")
+
+        self.click_start_button()
+        self.let_me_sleep(2)
+        self.lesson_grade_selection(GRADE_THREE)
+        self.lesson_grade_skill_selection(GRADE_SKILL_LISTENING)
+        self.lesson_selection()

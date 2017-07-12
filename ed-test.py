@@ -36,6 +36,9 @@ class EDTestCase(unittest.TestCase):
         self.profile_score = 0
         self.log = logging.getLogger('ed-logger # ')
 
+    def appInformation(self):
+        self.log(self.driver.contexts[-1])
+
     def closeApp(self):
         self.driver.quit()
 
@@ -553,5 +556,6 @@ class EDTestCase(unittest.TestCase):
 ###########################
 if __name__ == '__main__':
     check_device_availability()
+    
     suite = unittest.TestLoader().loadTestsFromTestCase(EDTestCase)
     unittest.TextTestRunner(verbosity=2).run(suite)

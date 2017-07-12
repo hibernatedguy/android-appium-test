@@ -10,7 +10,7 @@ from selenium.webdriver.common.by import By
 
 from desired_capabilities import (get_desired_capabilities)
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(filename='ed-logger.log',  filemode='w', level=logging.INFO, format='%(asctime)s : %(message)s')
 log = logging.getLogger('ed-logger # ')
 
 
@@ -52,6 +52,10 @@ class EnglishDuniyaSetup(unittest.TestCase):
     ####################
     def let_me_sleep(self, wait_time):
         return sleep(wait_time)
+
+    # App Information
+    def app_informtion(self, message):
+        log.info("### {} --- {} ###".format(message, self.driver.contexts[-1]))
 
     ##################
     # WAIT FOR ELEMENT
