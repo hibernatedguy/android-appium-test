@@ -76,7 +76,7 @@ class EnglishDuniyaSetup(unittest.TestCase):
         sleep(wait_time)
         return self.config_find_element.get(method)(element_key)
 
-    def find_element_and_click(self, method, element_key, wait_time=0):
+    def find_element_wait_and_click(self, method, element_key, wait_time=0):
         select_element = self.config_find_element.get(method)(element_key)
         select_element.click()
 

@@ -64,7 +64,7 @@ class LessonTestCase(EnglishDuniyaSetup):
 
     def take_recommended_lesson(self):
         log.info("TAKING RECOMMENDED LESSON")
-        self.find_element_and_click('by_id', 'landing-start-button', 20)
+        self.find_element_wait_and_click('by_id', 'landing-start-button', 20)
         self.open_quiz()
         self.take_quiz()
 
@@ -74,24 +74,29 @@ class LessonTestCase(EnglishDuniyaSetup):
     # 2. take vocab ui content
     ##########################################
     def open_vocan_ui(self):
-        self.wait_for_element_and_click('by_id', 'lesson-category-vocabulary-tile', 30)
+        self.wait_for_element_and_click('by_id', 'lesson-landing-resource-vocabulary-tile', 10)
 
     def take_vocab_ui(self):
+        # import ipdb;ipdb.set_trace()
+
         try:
             # wait for the next button to appear and flash cards
             self.wait_for_element('by_css_selector', '.sbtn.sbtn-arrow-forward', 30)
             self.wait_for_element('by_css_selector', '.flash-card.align-middle', 30)
 
             # prepare the list of vocab cards
-            self.find_elements_and_wait('by_css_selector', '.flash-card.align-middle', 2)
-            vocab_cards = self.driver.find_elements_by_css_selector("")
+            vocab_cards = self.find_elements_and_wait('by_css_selector', '.flash-card.align-middle', 2)
+            log.info("AVAILABLE VOCAB CARDS #{}".format(len(vocab_cards)))
 
             for key, vocab_card in enumerate(vocab_cards):
-
+                log.info('SELECTING {} vocab-card'.format(key + 1))
                 # wait for the next-vocab button to appear and click
-                self.wait_for_element_and_click('by_css_locator', '.sbtn.sbtn-arrow-forward', 30)
+                self.wait_for_element_and_click('by_css_selector', '.sbtn.sbtn-arrow-forward', 30)
+                self.let_me_sleep(3)
+
                 # check if submit-vocab button is available
-                submit_button_inactive = self.wait_for_element('by_css_selector', '.sbtn.sbtn-arrow-finish.ng-hide', 5)
+                submit_button_inactive = self.find_elements_and_wait('by_css_selector',
+                                                                     '.sbtn.sbtn-arrow-finish.ng-hide', 1)
 
                 # uncomment if above method not working
                 # self.let_me_sleep(5)
@@ -99,13 +104,14 @@ class LessonTestCase(EnglishDuniyaSetup):
                 #     ".sbtn.sbtn-arrow-finish.ng-hide")
 
                 if not submit_button_inactive:
+                    log.info('SUBMIT vocab')
                     # finish vocab
-                    self.find_element_click_and_wait('by_css_selector', '.sbtn.sbtn-arrow-finish', 5)
+                    self.find_element_wait_and_click('by_css_selector', '.sbtn.sbtn-arrow-finish', 5)
                     break
                 else:
-                    self.log.info('submit_button_inactive not visible')
-            self.wait_for_element_and_click(
-                'by_css_selector', '.animated.pulse.infinite.cbtn.cbtn-block.cbtn-yellow', 30)
+                    log.info('submit_button_inactive not visible')
+            self.find_element_wait_and_click(
+                'by_css_selector', '.animated.pulse.infinite.cbtn.cbtn-block.cbtn-yellow', 3)
         except Exception as e:
             log.info('Something went wrong please check your appium log : {}'.format(e))
             pass
@@ -114,11 +120,13 @@ class LessonTestCase(EnglishDuniyaSetup):
     # VIDEO TEST CASES
     #####################
     def open_video(self):
-        self.wait_for_element_and_click('by_id', 'lesson-category-listening-tile', 30)
+        log.info('OPENING video')
+        self.wait_for_element_and_click('by_id', 'lesson-landing-resource-resource-tile', 30)
 
     def take_video(self):
         ''' watch video and go back '''
-        self.wait_for_element_and_click('by_css_selector', '.animated.pulse.infinite.cbtn.cbtn-block.cbtn-yellow', 200)
+        log.info('PLAYING video')
+        self.wait_for_element_and_click('by_css_selector', '.animated.pulse.infinite.cbtn.cbtn-block.cbtn-yellow', 300)
 
     ##############################
     # APP NAVIGATIONS
@@ -175,17 +183,27 @@ class LessonTestCase(EnglishDuniyaSetup):
         recommendation_button = self.find_elements_and_wait('by_id', 'landing-start-button', 2)
         video_resource_button = self.find_elements_and_wait('by_id', 'lesson-landing-resource-resource-tile', 2)
 
+
+
+        if video_resource_button:
+            log.info('video content available')
+            self.open_video()
+            self.take_video()
+            # log.info('video resource is available')
+        else:
+            log.info('NO video content')
+
         if quiz_button is not None:
             log.info('quiz resource is available')
-            # self.open_quiz()
-            # self.take_quiz()
-            # # self.take_recommended_lesson()
-            # self.lesson_landing_back()
+            self.open_quiz()
+            self.take_quiz()
         else:
             log.info('NO quiz resource')
 
         if vocab_button:
             log.info('vocab content is available')
+            self.open_vocan_ui()
+            self.take_vocab_ui()
         else:
             log.info('NO vocab content')
 
@@ -193,11 +211,6 @@ class LessonTestCase(EnglishDuniyaSetup):
             log.info('recommended lesson is available')
         else:
             log.info('NO recommendation content')
-
-        if video_resource_button:
-            log.info('video resource is available')
-        else:
-            log.info('NO video content')
 
     def lesson_selection(self):
         ''' select lesson from lesson list
@@ -247,7 +260,7 @@ class LessonTestCase(EnglishDuniyaSetup):
     # CAN AUTOMATE BY LOOPING GRADE_SKILLS
     # INTENTIONALLY CREATED
     ##############################
-    # @unittest.skip("grade1_VOCAB")
+    @unittest.skip("grade1_VOCAB")
     def test_lesson_103_start_take_grade_1_content_VOCAB(self):
         self.app_informtion("grade_1_content_VOCAB")
 
@@ -268,7 +281,7 @@ class LessonTestCase(EnglishDuniyaSetup):
         self.lesson_grade_skill_selection(GRADE_SKILL_GRAMMAR)
         self.lesson_selection()
 
-    # @unittest.skip("grade1_READING")
+    @unittest.skip("grade1_READING")
     def test_lesson_105_start_take_grade_1_content_READING(self):
         self.app_informtion("grade_1_content_READING")
 
@@ -278,7 +291,7 @@ class LessonTestCase(EnglishDuniyaSetup):
         self.lesson_grade_skill_selection(GRADE_SKILL_READING)
         self.lesson_selection()
 
-    # @unittest.skip("grade1_LISTENING")
+    @unittest.skip("grade1_LISTENING")
     def test_lesson_106_start_take_grade_1_content_LISTENING(self):
         self.app_informtion("grade_1_content_LISTENING")
 
@@ -293,7 +306,7 @@ class LessonTestCase(EnglishDuniyaSetup):
     # CAN AUTOMATE BY LOOPING GRADE_SKILLS
     # INTENTIONALLY CREATED
     ##############################
-    # @unittest.skip("grade2_VOCAB")
+    @unittest.skip("grade2_VOCAB")
     def test_lesson_107_start_take_grade_2_content_VOCAB(self):
         self.app_informtion("grade_2_content_VOCAB")
 
@@ -303,7 +316,7 @@ class LessonTestCase(EnglishDuniyaSetup):
         self.lesson_grade_skill_selection(GRADE_SKILL_VOCAB)
         self.lesson_selection()
 
-    # @unittest.skip("grade2_GRAMMAR")
+    @unittest.skip("grade2_GRAMMAR")
     def test_lesson_108_start_take_grade_2_content_GRAMMAR(self):
         self.app_informtion("grade_2_content_GRAMMAR")
 
@@ -313,7 +326,7 @@ class LessonTestCase(EnglishDuniyaSetup):
         self.lesson_grade_skill_selection(GRADE_SKILL_GRAMMAR)
         self.lesson_selection()
 
-    # @unittest.skip("grade2_READING")
+    @unittest.skip("grade2_READING")
     def test_lesson_109_start_take_grade_2_content_READING(self):
         self.app_informtion("grade_2_content_READING")
 
@@ -323,7 +336,7 @@ class LessonTestCase(EnglishDuniyaSetup):
         self.lesson_grade_skill_selection(GRADE_SKILL_READING)
         self.lesson_selection()
 
-    # @unittest.skip("grade2_LISTENING")
+    @unittest.skip("grade2_LISTENING")
     def test_lesson_110_start_take_grade_2_content_LISTENING(self):
         self.app_informtion("grade_2_content_LISTENING")
 
@@ -338,7 +351,7 @@ class LessonTestCase(EnglishDuniyaSetup):
     # CAN AUTOMATE BY LOOPING GRADE_SKILLS
     # INTENTIONALLY CREATED
     ##############################
-    # @unittest.skip("grade3_VOCAB")
+    @unittest.skip("grade3_VOCAB")
     def test_lesson_111_start_take_grade_3_content_VOCAB(self):
         self.app_informtion("grade_3_content_VOCAB")
 
@@ -348,7 +361,7 @@ class LessonTestCase(EnglishDuniyaSetup):
         self.lesson_grade_skill_selection(GRADE_SKILL_VOCAB)
         self.lesson_selection()
 
-    # @unittest.skip("grade3_GRAMMAR")
+    @unittest.skip("grade3_GRAMMAR")
     def test_lesson_112_start_take_grade_3_content_GRAMMAR(self):
         self.app_informtion("grade_3_content_GRAMMAR")
 
@@ -358,7 +371,7 @@ class LessonTestCase(EnglishDuniyaSetup):
         self.lesson_grade_skill_selection(GRADE_SKILL_GRAMMAR)
         self.lesson_selection()
 
-    # @unittest.skip("grade3_READING")
+    @unittest.skip("grade3_READING")
     def test_lesson_113_start_take_grade_3_content_READING(self):
         self.app_informtion("grade_3_content_READING")
 
@@ -368,7 +381,7 @@ class LessonTestCase(EnglishDuniyaSetup):
         self.lesson_grade_skill_selection(GRADE_SKILL_READING)
         self.lesson_selection()
 
-    # @unittest.skip("grade3_LISTENING")
+    @unittest.skip("grade3_LISTENING")
     def test_lesson_114_start_take_grade_3_content_LISTENING(self):
         self.app_informtion("grade_3_content_LISTENING")
 
