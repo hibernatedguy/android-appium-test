@@ -2,22 +2,16 @@ import logging
 import unittest
 from time import sleep
 
-from appium.webdriver.common.touch_action import TouchAction
 from appium import webdriver
 
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
-from random import randint
-
-from desired_capabilities import (get_desired_capabilities, SLEEP_SHORT,
-                                  SLEEP_LONG, SLEEP_QUICK, check_device_availability,
-                                  random_numbers)
+from desired_capabilities import (get_desired_capabilities)
 
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger('ed-logger # ')
-
 
 
 class EnglishDuniyaSetup(unittest.TestCase):
@@ -53,14 +47,18 @@ class EnglishDuniyaSetup(unittest.TestCase):
             'by_xpath': self.driver.find_elements_by_xpath,
         }
 
+    ####################
+    # CUSTOM METHODS
+    ####################
     def let_me_sleep(self, wait_time):
         return sleep(wait_time)
 
     ##################
-    # WAIT ELEMENT
+    # WAIT FOR ELEMENT
     ##################
     def wait_for_element(self, method, element_key, wait_time):
-        return WebDriverWait(self.driver, wait_time).until(EC.presence_of_element_located((self.config_wait_for_element.get(method), element_key)))
+        return WebDriverWait(self.driver, wait_time).until(
+            EC.presence_of_element_located((self.config_wait_for_element.get(method), element_key)))
 
     def wait_for_element_and_click(self, method, element_key, wait_time):
         _elemet = WebDriverWait(self.driver, wait_time).until(
@@ -68,18 +66,17 @@ class EnglishDuniyaSetup(unittest.TestCase):
         _elemet.click()
 
     ############
-    # ELEMENT 
+    # FIND ELEMENTS
     ############
-    def find_element_and_wait(self, method, element_key, wait_time):
-        _wait_time = wait_time if wait_time else 0
-        sleep(_wait_time)
+    def find_element_and_wait(self, method, element_key, wait_time=0):
+        sleep(wait_time)
         return self.config_find_element.get(method)(element_key)
 
-    def find_element_and_click(self, method, element_key, wait_time):
+    def find_element_and_click(self, method, element_key, wait_time=0):
         select_element = self.config_find_element.get(method)(element_key)
         select_element.click()
 
-    def find_element_click_and_wait(self, method, element_key, wait_time):
+    def find_element_click_and_wait(self, method, element_key, wait_time=0):
         select_element = self.config_find_element.get(method)(element_key)
         select_element.click()
         sleep(wait_time)
@@ -87,22 +84,22 @@ class EnglishDuniyaSetup(unittest.TestCase):
     ############
     # ELEMENTS
     ############
-    def find_elements_and_wait(self, method, element_key, wait_time):
-        _wait_time = wait_time if wait_time else 0
-        sleep(_wait_time)
+    def find_elements_and_wait(self, method, element_key, wait_time=0):
+        sleep(wait_time)
         return self.config_find_elements.get(method)(element_key)
 
-    def find_elements_and_click(self, method, element_key, wait_time):
+    def find_elements_and_click(self, method, element_key, wait_time=0):
         select_element = self.config_find_elements.get(method)(element_key)
         select_element.click()
 
-    def find_elements_wait_and_click(self, method, element_key, wait_time):
+    def find_elements_wait_and_click(self, method, element_key, wait_time=0):
         select_element = self.config_find_elements.get(method)(element_key)
         select_element.click()
         sleep(wait_time)
 
-
-
+    ####################
+    # HARDWARE BUTTONS
+    ####################
     def close_app(self):
         self.driver.quit()
 
