@@ -46,11 +46,11 @@ class ProfileTestCase(EnglishDuniyaSetup):
     # @unittest.skip("profile selection automation")
     def test_001_profile_selection_automation(self):
         counter = 0
-        for count in range(5):
+        for count in range(20):
             counter = counter + 1
             log.info('TESTING #{}'.format(counter))
             self.app_informtion("Profile Selection Automation")
             self.profile_selection_button_click()
-            self.profile_select(randint(0, 0))
+            self.profile_select(randint(0, 3))
             self.click_start_button()
             self.lesson_category_home_back()
