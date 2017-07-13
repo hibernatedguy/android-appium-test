@@ -97,11 +97,12 @@ class LessonTestCase(EnglishDuniyaSetup):
                 self.let_me_sleep(5)
 
                 # check if submit-vocab button is available
-                submit_button_inactive = self.find_elements_and_wait('by_css_selector', '.sbtn.sbtn-arrow-finish.ng-hide', 0)
+                submit_button_inactive = self.find_elements_and_wait('by_css_selector',
+                    '.sbtn.sbtn-arrow-finish.ng-hide', 0)
 
                 if not submit_button_inactive:
                     # finish vocab
-                    self.wait_for_element_and_click('by_css_selector', '.sbtn.sbtn-arrow-finish', 10)
+                    self.wait_for_element_and_click('by_css_selector', '.sbtn.sbtn-arrow-finish', 30)
                     self.let_me_sleep(3)
                     log.info('SUBMIT vocab')
                     break
@@ -202,8 +203,8 @@ class LessonTestCase(EnglishDuniyaSetup):
 
         if vocab_button:
             log.info('vocab content is available')
-            # self.open_vocan_ui()
-            # self.take_vocab_ui()
+            self.open_vocan_ui()
+            self.take_vocab_ui()
         else:
             log.info('NO vocab content')
 
@@ -220,7 +221,6 @@ class LessonTestCase(EnglishDuniyaSetup):
             4. close the once all the resources are consumed
         '''
         for index, lesson in enumerate(self.lesson_list()):
-
             log.info("lesson #{}".format(index))
             lesson_id = 'lesson-list-lesson{}-tile'.format(index)
 
