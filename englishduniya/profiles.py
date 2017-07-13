@@ -51,6 +51,6 @@ class ProfileTestCase(EnglishDuniyaSetup):
             log.info('TESTING #{}'.format(counter))
             self.app_informtion("Profile Selection Automation")
             self.profile_selection_button_click()
-            self.profile_select(randint(0, 3))
+            self.profile_select(randint(0, 0))
             self.click_start_button()
             self.lesson_category_home_back()

@@ -354,7 +354,7 @@ class LessonTestCase(EnglishDuniyaSetup):
     # CAN AUTOMATE BY LOOPING GRADE_SKILLS
     # INTENTIONALLY CREATED
     ##############################
-    # @unittest.skip("grade3_VOCAB")
+    @unittest.skip("grade3_VOCAB")
     def test_111_start_take_grade_3_content_VOCAB(self):
         self.app_informtion("grade_3_content_VOCAB")
 
@@ -364,7 +364,7 @@ class LessonTestCase(EnglishDuniyaSetup):
         self.lesson_grade_skill_selection(GRADE_SKILL_VOCAB)
         self.lesson_selection()
 
-    # @unittest.skip("grade3_GRAMMAR")
+    @unittest.skip("grade3_GRAMMAR")
     def test_112_start_take_grade_3_content_GRAMMAR(self):
         self.app_informtion("grade_3_content_GRAMMAR")
 
