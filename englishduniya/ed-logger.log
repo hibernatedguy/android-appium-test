@@ -1,26 +1,158 @@
-2017-07-12 23:19:18,243 : ### grade_2_content_VOCAB --- WEBVIEW_com.ionicframework.zayamobile694033 ###
-2017-07-12 23:19:25,169 : ### APP VERSION ### v 1.2.94 rc 0.1.0 sc 0.0.0 ### 
-2017-07-12 23:19:28,810 : selecting grade #2
-2017-07-12 23:19:30,226 : selecting skill #1
-2017-07-12 23:19:32,890 : PREPARE lesson list..
-2017-07-12 23:19:48,391 : TESTING FOR #6 lessons.
-2017-07-12 23:19:48,391 : lesson #1
-2017-07-12 23:19:57,018 : OPENING lesson #House
-2017-07-12 23:19:57,018 : CHECK available resources
-2017-07-12 23:20:00,637 : NO video content
-2017-07-12 23:20:00,637 : quiz resource is available
-2017-07-12 23:20:00,638 : vocab content is available
-2017-07-12 23:20:00,638 : OPENING vocabui
-2017-07-12 23:20:01,375 : TAKING vocabui
-2017-07-12 23:20:36,587 : AVAILABLE VOCAB CARDS #5
-2017-07-12 23:20:36,588 : SELECTING 1 vocab-card
-2017-07-12 23:20:41,502 : submit_button_inactive not visible
-2017-07-12 23:20:41,503 : SELECTING 2 vocab-card
-2017-07-12 23:20:45,966 : submit_button_inactive not visible
-2017-07-12 23:20:45,966 : SELECTING 3 vocab-card
-2017-07-12 23:20:50,451 : submit_button_inactive not visible
-2017-07-12 23:20:50,451 : SELECTING 4 vocab-card
-2017-07-12 23:21:00,630 : SUBMIT vocab
-2017-07-12 23:21:04,932 : recommended lesson is available
-2017-07-12 23:21:04,933 : lesson landing back button clicked
-2017-07-12 23:21:06,916 : lesson #2
+2017-07-13 12:46:49,139 : ### grade_2_content_READING --- WEBVIEW_com.ionicframework.zayamobile694033 ###
+2017-07-13 12:46:56,546 : ### APP VERSION ### v 1.2.94 rc 0.1.0 sc 0.0.0 ### 
+2017-07-13 12:47:00,286 : selecting grade #2
+2017-07-13 12:47:01,667 : selecting skill #3
+2017-07-13 12:47:03,824 : PREPARE lesson list..
+2017-07-13 12:47:13,135 : TESTING FOR #6 lessons.
+2017-07-13 12:47:13,135 : lesson #0
+2017-07-13 12:47:21,584 : OPENING lesson #Comprehension
+2017-07-13 12:47:21,584 : CHECK available resources
+2017-07-13 12:47:25,306 : NO video content
+2017-07-13 12:47:25,306 : quiz resource is available
+2017-07-13 12:47:25,306 : opening quiz..
+2017-07-13 12:47:27,431 : TAKING QUIZ FOR Comprehension
+2017-07-13 12:47:28,162 : taking quiz..
+2017-07-13 12:47:38,993 : selecting option for question #0
+2017-07-13 12:47:43,639 : selecting option for question #1
+2017-07-13 12:47:47,905 : selecting option for question #2
+2017-07-13 12:47:52,124 : selecting option for question #3
+2017-07-13 12:47:56,209 : selecting option for question #4
+2017-07-13 12:48:00,408 : selecting option for question #5
+2017-07-13 12:48:04,541 : selecting option for question #6
+2017-07-13 12:48:10,839 : NO vocab content
+2017-07-13 12:48:10,839 : recommended lesson is available
+2017-07-13 12:48:10,839 : lesson landing back button clicked
+2017-07-13 12:48:12,257 : lesson #1
+2017-07-13 12:48:20,753 : OPENING lesson #Comprehension
+2017-07-13 12:48:20,753 : CHECK available resources
+2017-07-13 12:48:24,384 : NO video content
+2017-07-13 12:48:24,384 : quiz resource is available
+2017-07-13 12:48:24,384 : opening quiz..
+2017-07-13 12:48:26,528 : TAKING QUIZ FOR Comprehension
+2017-07-13 12:48:27,203 : taking quiz..
+2017-07-13 12:48:36,973 : selecting option for question #0
+2017-07-13 12:48:41,423 : selecting option for question #1
+2017-07-13 12:48:45,579 : selecting option for question #2
+2017-07-13 12:48:49,607 : selecting option for question #3
+2017-07-13 12:48:53,837 : selecting option for question #4
+2017-07-13 12:48:59,388 : NO vocab content
+2017-07-13 12:48:59,388 : recommended lesson is available
+2017-07-13 12:48:59,388 : lesson landing back button clicked
+2017-07-13 12:49:00,639 : lesson #2
+2017-07-13 12:49:09,212 : OPENING lesson #Comprehension
+2017-07-13 12:49:09,213 : CHECK available resources
+2017-07-13 12:49:12,660 : NO video content
+2017-07-13 12:49:12,661 : quiz resource is available
+2017-07-13 12:49:12,661 : opening quiz..
+2017-07-13 12:49:14,794 : TAKING QUIZ FOR Comprehension
+2017-07-13 12:49:15,422 : taking quiz..
+2017-07-13 12:49:24,868 : selecting option for question #0
+2017-07-13 12:49:29,416 : selecting option for question #1
+2017-07-13 12:49:34,061 : selecting option for question #2
+2017-07-13 12:49:38,319 : selecting option for question #3
+2017-07-13 12:49:42,577 : selecting option for question #4
+2017-07-13 12:49:46,708 : selecting option for question #5
+2017-07-13 12:49:52,157 : NO vocab content
+2017-07-13 12:49:52,157 : recommended lesson is available
+2017-07-13 12:49:52,158 : lesson landing back button clicked
+2017-07-13 12:49:53,380 : lesson #3
+2017-07-13 12:50:02,408 : OPENING lesson #Comprehension
+2017-07-13 12:50:02,408 : CHECK available resources
+2017-07-13 12:50:06,082 : NO video content
+2017-07-13 12:50:06,082 : quiz resource is available
+2017-07-13 12:50:06,082 : opening quiz..
+2017-07-13 12:50:08,198 : TAKING QUIZ FOR Comprehension
+2017-07-13 12:50:08,863 : taking quiz..
+2017-07-13 12:50:17,950 : selecting option for question #0
+2017-07-13 12:50:22,383 : selecting option for question #1
+2017-07-13 12:50:26,655 : selecting option for question #2
+2017-07-13 12:50:30,954 : selecting option for question #3
+2017-07-13 12:50:37,007 : NO vocab content
+2017-07-13 12:50:37,007 : recommended lesson is available
+2017-07-13 12:50:37,007 : lesson landing back button clicked
+2017-07-13 12:50:38,161 : lesson #4
+2017-07-13 12:50:46,579 : OPENING lesson #Comprehension
+2017-07-13 12:50:46,580 : CHECK available resources
+2017-07-13 12:50:49,841 : NO video content
+2017-07-13 12:50:49,842 : quiz resource is available
+2017-07-13 12:50:49,842 : opening quiz..
+2017-07-13 12:50:51,978 : TAKING QUIZ FOR Comprehension
+2017-07-13 12:50:52,612 : taking quiz..
+2017-07-13 12:51:01,985 : selecting option for question #0
+2017-07-13 12:51:06,432 : selecting option for question #1
+2017-07-13 12:51:10,714 : selecting option for question #2
+2017-07-13 12:51:15,016 : selecting option for question #3
+2017-07-13 12:51:19,247 : selecting option for question #4
+2017-07-13 12:51:25,000 : NO vocab content
+2017-07-13 12:51:25,000 : recommended lesson is available
+2017-07-13 12:51:25,000 : lesson landing back button clicked
+2017-07-13 12:51:26,354 : lesson #5
+2017-07-13 12:51:34,888 : OPENING lesson #Comprehension
+2017-07-13 12:51:34,888 : CHECK available resources
+2017-07-13 12:51:38,146 : NO video content
+2017-07-13 12:51:38,147 : quiz resource is available
+2017-07-13 12:51:38,147 : opening quiz..
+2017-07-13 12:51:40,304 : TAKING QUIZ FOR Comprehension
+2017-07-13 12:51:40,883 : taking quiz..
+2017-07-13 12:51:50,865 : selecting option for question #0
+2017-07-13 12:51:55,296 : selecting option for question #1
+2017-07-13 12:51:59,715 : selecting option for question #2
+2017-07-13 12:52:03,939 : selecting option for question #3
+2017-07-13 12:52:08,164 : selecting option for question #4
+2017-07-13 12:52:12,493 : selecting option for question #5
+2017-07-13 12:52:16,676 : selecting option for question #6
+2017-07-13 12:52:22,026 : NO vocab content
+2017-07-13 12:52:22,026 : recommended lesson is available
+2017-07-13 12:52:22,026 : lesson landing back button clicked
+2017-07-13 12:52:41,371 : ### grade_2_content_LISTENING --- WEBVIEW_com.ionicframework.zayamobile694033 ###
+2017-07-13 12:52:50,445 : ### APP VERSION ### v 1.2.94 rc 0.1.0 sc 0.0.0 ### 
+2017-07-13 12:52:53,226 : selecting grade #2
+2017-07-13 12:52:54,999 : selecting skill #4
+2017-07-13 12:52:57,091 : PREPARE lesson list..
+2017-07-13 12:53:06,416 : TESTING FOR #3 lessons.
+2017-07-13 12:53:06,416 : lesson #0
+2017-07-13 12:53:14,961 : OPENING lesson #Comprehension
+2017-07-13 12:53:14,961 : CHECK available resources
+2017-07-13 12:53:18,635 : NO video content
+2017-07-13 12:53:18,636 : quiz resource is available
+2017-07-13 12:53:18,636 : opening quiz..
+2017-07-13 12:53:20,761 : TAKING QUIZ FOR Comprehension
+2017-07-13 12:53:21,457 : taking quiz..
+2017-07-13 12:53:32,740 : selecting option for question #0
+2017-07-13 12:53:37,500 : selecting option for question #1
+2017-07-13 12:53:41,978 : selecting option for question #2
+2017-07-13 12:53:46,490 : selecting option for question #3
+2017-07-13 12:53:52,804 : NO vocab content
+2017-07-13 12:53:52,804 : recommended lesson is available
+2017-07-13 12:53:52,804 : lesson landing back button clicked
+2017-07-13 12:53:53,903 : lesson #1
+2017-07-13 12:54:02,440 : OPENING lesson #Comprehension
+2017-07-13 12:54:02,440 : CHECK available resources
+2017-07-13 12:54:05,701 : NO video content
+2017-07-13 12:54:05,701 : quiz resource is available
+2017-07-13 12:54:05,701 : opening quiz..
+2017-07-13 12:54:07,834 : TAKING QUIZ FOR Comprehension
+2017-07-13 12:54:08,448 : taking quiz..
+2017-07-13 12:54:18,650 : selecting option for question #0
+2017-07-13 12:54:23,360 : selecting option for question #1
+2017-07-13 12:54:28,091 : selecting option for question #2
+2017-07-13 12:54:32,607 : selecting option for question #3
+2017-07-13 12:54:38,590 : NO vocab content
+2017-07-13 12:54:38,590 : recommended lesson is available
+2017-07-13 12:54:38,590 : lesson landing back button clicked
+2017-07-13 12:54:39,567 : lesson #2
+2017-07-13 12:54:48,089 : OPENING lesson #Comprehension
+2017-07-13 12:54:48,089 : CHECK available resources
+2017-07-13 12:54:51,339 : NO video content
+2017-07-13 12:54:51,340 : quiz resource is available
+2017-07-13 12:54:51,340 : opening quiz..
+2017-07-13 12:54:53,488 : TAKING QUIZ FOR Comprehension
+2017-07-13 12:54:54,056 : taking quiz..
+2017-07-13 12:55:06,545 : selecting option for question #0
+2017-07-13 12:55:11,035 : selecting option for question #1
+2017-07-13 12:55:15,634 : selecting option for question #2
+2017-07-13 12:55:20,188 : selecting option for question #3
+2017-07-13 12:55:24,717 : selecting option for question #4
+2017-07-13 12:55:30,506 : NO vocab content
+2017-07-13 12:55:30,506 : recommended lesson is available
+2017-07-13 12:55:30,506 : lesson landing back button clicked

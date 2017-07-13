@@ -2,13 +2,13 @@ import unittest
 
 from desired_capabilities import check_device_availability
 from lesson import LessonTestCase
-from profiles import AppStartupChecks
+from profiles import ProfileTestCase
 
 
 ###########################
 # Actual Code Starts Here
 ###########################
-class MainTestRunner(AppStartupChecks, LessonTestCase):
+class MainTestRunner(ProfileTestCase, LessonTestCase):
     ''' English Duniya App Testing
     '''
     pass

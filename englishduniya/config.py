@@ -1,6 +1,7 @@
 import logging
 import unittest
 from time import sleep
+import datetime
 
 from appium import webdriver
 
@@ -10,7 +11,9 @@ from selenium.webdriver.common.by import By
 
 from desired_capabilities import (get_desired_capabilities)
 
-logging.basicConfig(filename='ed-logger.log', filemode='w', level=logging.INFO, format='%(asctime)s : %(message)s')
+log_date = datetime.datetime.now().date().isoformat()
+
+logging.basicConfig(filename='ed-logger___'+log_date+'__.log', level=logging.INFO, format='%(asctime)s : %(message)s')
 log = logging.getLogger('ed-logger # ')
 
 
@@ -20,7 +23,7 @@ class EnglishDuniyaSetup(unittest.TestCase):
     '''
 
     def setUp(self):
-        desired_caps = get_desired_capabilities('308_hi.apk')
+        desired_caps = get_desired_capabilities('311_ta_bundle.apk')
         self.driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', desired_caps)
 
         self.profile_score = 0

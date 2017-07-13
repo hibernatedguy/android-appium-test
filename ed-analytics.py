@@ -48,6 +48,6 @@ def get_analytics_data():
 
 if __name__ == "__main__":
     while True:
-        sleep(5)
+        sleep(15)
         get_analytics_data()
         print ("\n\n\n")
